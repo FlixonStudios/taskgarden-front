@@ -4,7 +4,7 @@ import forestImg from "../../assets/img/nP5HPw4.jpeg"
 import Login from "./Login";
 import Register from "./Register";
 
-function LandingPage(props) {
+function LandingPage({auth, setAuth, setUser}) {
     const [loginShow, setLoginShow] = useState(false);
     const [registerShow, setRegisterShow] = useState(false);
     const handleLoginShow = () => setLoginShow(true);
@@ -52,7 +52,7 @@ function LandingPage(props) {
                     </Row>
                 </Col>
             </Col>
-            <Login show={loginShow} setShow={setLoginShow}/>
+            <Login show={loginShow} setShow={setLoginShow} setAuth={setAuth}/>
             <Register show={registerShow} setShow={setRegisterShow}/>
         </Row>
     );

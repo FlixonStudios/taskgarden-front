@@ -1,28 +1,73 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 // Components
 import LandingPage from "./components/landing/LandingPage";
 import Navigation from "./components/lib/Navigation";
 import Dashboard from "./components/dashboard/Dashboard";
+import Login from "./components/landing/Login";
 
 function App() {
-    console.log(window.location.pathname)
+    const [auth, setAuth] = useState(false)
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+        async function setUserStats() {
+            try {
+                let {data} = await axios.get("/api/user", {
+                    headers: {
+                        authorization: `Bearer ${localStorage.token}`
+                    }
+                })
+                setAuth(true)
+                setUser(data.user)
+            } catch (e) {
+                setAuth(false)
+                setUser(null)
+                localStorage.removeItem("token")
+            }
+        }
+
+        setUserStats()
+    }, [auth])
+
+    function logout() {
+        setAuth(false)
+        setUser(null)
+        localStorage.removeItem("token")
+    }
+
     return (
         <div className="App">
             <BrowserRouter>
-                {window.location.pathname !== "/" && <Navigation/>}
+                {auth && <Navigation logout={logout}/>}
                 <Switch>
                     <Route path="/" exact>
-                        <LandingPage />
+                        <LandingPage setAuth={setAuth}/>
                     </Route>
-                    <Route path="/dashboard" exact>
-                        <Dashboard  />
-                    </Route>
+                    <PrivateRouter auth={auth} path="/dashboard" Component={Dashboard} exact/>
                 </Switch>
             </BrowserRouter>
         </div>
     );
+}
+
+function PrivateRouter({auth, Component, path, location, ...rest}) {
+    //if auth is true then show Route else redirect to login
+    return (
+        <>
+            {(auth) ?
+                <Route {...rest}>
+                    <Component/>
+                </Route> : <Redirect to={{
+                    pathname: "/",
+                    state: {from: location}
+                }}/>
+            }
+        </>
+    )
 }
 
 export default App;
