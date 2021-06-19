@@ -53,7 +53,7 @@ function LandingPage({auth, setAuth, setUser}) {
                 </Col>
             </Col>
             <Login show={loginShow} setShow={setLoginShow} setAuth={setAuth}/>
-            <Register show={registerShow} setShow={setRegisterShow}/>
+            <Register show={registerShow} setShow={setRegisterShow} setAuth={setAuth}/>
         </Row>
     );
 }

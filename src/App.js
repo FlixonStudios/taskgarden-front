@@ -7,7 +7,8 @@ import axios from "axios";
 import LandingPage from "./components/landing/LandingPage";
 import Navigation from "./components/lib/Navigation";
 import Dashboard from "./components/dashboard/Dashboard";
-import Login from "./components/landing/Login";
+import Garden from "./components/garden/Garden";
+import Florist from "./components/florist/Florist";
 
 function App() {
     const [auth, setAuth] = useState(false)
@@ -45,9 +46,11 @@ function App() {
                 {auth && <Navigation logout={logout}/>}
                 <Switch>
                     <Route path="/" exact>
-                        <LandingPage setAuth={setAuth}/>
+                        {!auth ? <LandingPage setAuth={setAuth}/> : <Dashboard setAuth={setAuth}/>}
                     </Route>
                     <PrivateRouter auth={auth} path="/dashboard" Component={Dashboard} exact/>
+                    <PrivateRouter auth={auth} path="/garden" Component={Garden} exact/>
+                    <PrivateRouter auth={auth} path="/florist" Component={Florist} exact/>
                 </Switch>
             </BrowserRouter>
         </div>

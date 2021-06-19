@@ -5,7 +5,9 @@ import {NavLink} from "react-router-dom";
 function Navigation({logout}) {
     return (
         <Navbar expand="lg" id="navbar">
-            <Navbar.Brand id="navbarBrand" className="">Task Garden</Navbar.Brand>
+            <Navbar.Brand id="navbarBrand" className="">
+                <NavLink to="/">Task Garden</NavLink>
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
