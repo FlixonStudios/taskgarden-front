@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Button, Col, Container, Row} from "react-bootstrap";
+import AddTask from "./AddTask";
 
 function Dashboard(props) {
+    // Add Task Modal
+    const [addTaskShow, setAddTaskShow] = useState(false); // Modal appearance state
+    const handleShow = () => setAddTaskShow(true); // Function to show Modal
+
     return (
         <>
-        <div>Dashboard</div>
-    <div>Dashboard</div>
-    <div>Dashboard</div>
+            <Button variant="primary" onClick={handleShow}>
+                Add Task
+            </Button>
+            <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} />
+            <Container>
+                <Row>
+                    <Col>
+
+                    </Col>
+                </Row>
+            </Container>
         </>
     );
 }
