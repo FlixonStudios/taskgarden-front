@@ -27,6 +27,7 @@ function App() {
             } catch (e) {
                 setAuth(false)
                 setUser(null)
+                await axios.delete("/api/logout")
                 localStorage.removeItem("token")
             }
         }
@@ -34,10 +35,16 @@ function App() {
         setUserStats()
     }, [auth])
 
-    function logout() {
-        setAuth(false)
-        setUser(null)
-        localStorage.removeItem("token")
+    async function logout() {
+        try{
+            setAuth(false)
+            setUser(null)
+            await axios.delete("/api/logout")
+            localStorage.removeItem("token")
+        }catch (e) {
+
+        }
+
     }
 
     return (
