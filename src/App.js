@@ -27,7 +27,11 @@ function App() {
             } catch (e) {
                 setAuth(false)
                 setUser(null)
-                await axios.delete("/api/logout")
+                await axios.delete("/api/logout", {
+                    headers: {
+                        authorization: `Bearer ${localStorage.token}`
+                    }
+                })
                 localStorage.removeItem("token")
             }
         }
@@ -39,12 +43,15 @@ function App() {
         try{
             setAuth(false)
             setUser(null)
-            await axios.delete("/api/logout")
+            await axios.delete("/api/logout", {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
             localStorage.removeItem("token")
         }catch (e) {
-
+            console.log(e)
         }
-
     }
 
     return (
