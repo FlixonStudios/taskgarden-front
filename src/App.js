@@ -62,7 +62,7 @@ function App() {
                     <Route path="/" exact>
                         {!auth ? <LandingPage setAuth={setAuth}/> : <Dashboard setAuth={setAuth}/>}
                     </Route>
-                    <PrivateRouter auth={auth} path="/dashboard" Component={Dashboard} exact/>
+                    <PrivateRouter auth={auth} user={user} path="/dashboard" Component={Dashboard} exact/>
                     <PrivateRouter auth={auth} path="/garden" Component={Garden} exact/>
                     <PrivateRouter auth={auth} path="/florist" Component={Florist} exact/>
                 </Switch>

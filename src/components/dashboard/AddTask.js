@@ -1,14 +1,47 @@
 import React, {useState} from 'react';
-import {Button, Modal, Form, Container, Row, Col, ButtonGroup, ButtonToolbar} from "react-bootstrap";
+import {Button, Modal, Form, ButtonGroup, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
-function AddTask({addTaskShow, setAddTaskShow}) {
+function AddTask({addTaskShow, setAddTaskShow, getTask}) {
+
+    const [newTaskForm, setNewTaskForm] = useState({}) // Form State
+    const [startDate, setStartDate] = useState(new Date()); // Datepicker
+
     // Add Task Modal
-    const handleClose = () => setAddTaskShow(false); // Function to close Modal
+    function handleClose() { // Function to close Modal
+        setAddTaskShow(false);
+        setNewTaskForm({}) // Reset form after closing
+    }
 
-    // Datepicker
-    const [startDate, setStartDate] = useState(new Date());
+    // Form change
+    function handleChange(e) {
+        setNewTaskForm(prevState => ({...prevState, [e.target.name] : e.target.value }))
+    }
+
+    function handleDateChange(date) {
+        setStartDate(date)
+        setNewTaskForm(prevState => ({...prevState, dateBy: date}))
+    }
+
+    function handleQuadrantClick(value) {
+        setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
+    }
+
+    async function submit() {
+        try {
+            await axios.post("/api/tasks/create", newTaskForm,{
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
+            handleClose()
+            getTask()
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     return (
         <Modal show={addTaskShow} onHide={handleClose}>
@@ -19,17 +52,17 @@ function AddTask({addTaskShow, setAddTaskShow}) {
                 <Form>
                     <Form.Group>
                         <Form.Label>Task Title</Form.Label>
-                        <Form.Control type="text" placeholder="Task Title" />
+                        <Form.Control name="name" type="text" placeholder="Task Title" onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group>
                         <Form.Label>Category</Form.Label>
-                        <Form.Control type="text" placeholder="Category" />
+                        <Form.Control name="category" type="text" placeholder="Category" onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group>
                         <Form.Label>Completed By</Form.Label>
-                        <div><DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /></div>
+                        <div><DatePicker name="dateBy" selected={startDate} onChange={(date) => handleDateChange(date)} /></div>
                     </Form.Group>
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
@@ -42,18 +75,32 @@ function AddTask({addTaskShow, setAddTaskShow}) {
                         </Form.Control>
                     </Form.Group>
 
-                        <ButtonGroup aria-label="Basic example" size="lg">
-                            <Button variant="secondary">Important Urgent</Button>
-                            <Button variant="secondary">Important Not-Urgent</Button>
-                        </ButtonGroup>
+                        <ToggleButtonGroup name="matrix" size="lg" onChange={handleQuadrantClick}>
+                            <ToggleButton
+                                variant="secondary"
+                                value={{isImportant: true, isUrgent: true}}>
+                                Important Urgent
+                            </ToggleButton>
+                            <ToggleButton
+                                variant="secondary"
+                                value={{isImportant: true, isUrgent: false}}>
+                                Important Not-Urgent
+                            </ToggleButton>
                     <br/>
-                        <ButtonGroup aria-label="Basic example" size="lg">
-                            <Button variant="secondary">Unimportant Urgent</Button>
-                            <Button variant="secondary">Unimportant Not-Urgent</Button>
-                        </ButtonGroup>
+                            <ToggleButton
+                                variant="secondary"
+                                value={{isImportant: false, isUrgent: true}}>
+                                Unimportant Urgent
+                            </ToggleButton>
+                            <ToggleButton
+                                variant="secondary"
+                                value={{isImportant: false, isUrgent: false}}>
+                                Unimportant Not-Urgent
+                            </ToggleButton>
+                        </ToggleButtonGroup>
                     <br/>
-                    <br/>
-                    <Button variant="primary" type="submit">
+
+                    <Button variant="primary" onClick={submit}>
                         Submit
                     </Button>
                 </Form>
