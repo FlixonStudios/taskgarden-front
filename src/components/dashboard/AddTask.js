@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Modal, Form, ButtonGroup, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import moment from "moment"
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
