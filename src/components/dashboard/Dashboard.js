@@ -6,6 +6,7 @@ import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
 import {setTaskList} from "../../store/actions/task.action";
 import Task from "./Task";
+import Taskboard from "./Taskboard";
 
 function Dashboard(props) {
     // Add Task Modal
@@ -40,13 +41,7 @@ function Dashboard(props) {
             </Button>
             <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} getTasks={getTasks} />
             <Container>
-                <Row>
-                    {tasks.length > 0 && tasks.map(task => (
-                    <Col md={4} key={task._id}>
-                        <Task task={task}/>
-                    </Col>
-                    ))}
-                </Row>
+                <Taskboard tasks={tasks}/>
             </Container>
 
         </>
