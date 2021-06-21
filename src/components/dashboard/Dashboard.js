@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Row, Toast} from "react-bootstrap";
 import AddTask from "./AddTask";
 import axios from "axios";
+import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
 import {setTaskList} from "../../store/actions/task.action";
 
@@ -26,9 +27,8 @@ function Dashboard(props) {
         }
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         getTasks()
-        console.log(tasks)
     }, [])
 
     return (
@@ -41,12 +41,15 @@ function Dashboard(props) {
                 <Row>
                     {tasks.length > 0 && tasks.map(task => (
                     <Col md={4} key={task._id}>
-                        <Toast>
+                        <Toast onClose>
                             <Toast.Header>
                                 <strong className="mr-auto">{task.name}</strong>
-                                {/*<small>{task.dateBy.split("T")[0]}</small>*/}
+                                <small>Complete by: {moment(task.dateBy).calendar(null, {sameElse: 'DD/MM/YY'})}</small>
                             </Toast.Header>
-                            <Toast.Body>{task.category}</Toast.Body>
+                            <Toast.Body>
+                                <h6>Category: {task.category}</h6>
+                                <h6>{task.description}</h6>
+                            </Toast.Body>
                         </Toast>
                     </Col>
                     ))}
