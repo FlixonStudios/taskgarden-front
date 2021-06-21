@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Row, Toast} from "react-bootstrap";
 import AddTask from "./AddTask";
 import axios from "axios";
+import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
 import {setTaskList} from "../../store/actions/task.action";
 import Task from "./Task";
@@ -28,7 +29,7 @@ function Dashboard(props) {
         }
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         getTasks()
     }, [])
 
