@@ -4,8 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
-function AddTask({addTaskShow, setAddTaskShow, getTask}) {
-
+function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     // Datepicker
     const [startDate, setStartDate] = useState(new Date());
@@ -32,8 +31,9 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
+
             handleClose()
-            getTask()
+            getTasks()
         } catch (e) {
             console.log(e)
         }
@@ -55,7 +55,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                         <Form.Label>Category</Form.Label>
                         <Form.Control name="category" type="text" placeholder="Category" onChange={handleChange}/>
                     </Form.Group>
-
 
                     <Form.Group>
                         <Form.Label>Start Date</Form.Label>
