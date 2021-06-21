@@ -38,15 +38,15 @@ function Taskboard({tasks}) {
             <Row>
                 <Col md={6} className={`px-0`}>
                     <SubBoard tasks={tasks}
-                              isImportant={importantUrgentMatrix.isImportant[3]}
-                              isUrgent={importantUrgentMatrix.isUrgent[3]}
-                              color={colorMatrix.color[3]}/>
-                </Col>
-                <Col md={6} className={`px-0`}>
-                    <SubBoard tasks={tasks}
                               isImportant={importantUrgentMatrix.isImportant[2]}
                               isUrgent={importantUrgentMatrix.isUrgent[2]}
                               color={colorMatrix.color[2]}/>
+                </Col>
+                <Col md={6} className={`px-0`}>
+                    <SubBoard tasks={tasks}
+                              isImportant={importantUrgentMatrix.isImportant[3]}
+                              isUrgent={importantUrgentMatrix.isUrgent[3]}
+                              color={colorMatrix.color[3]}/>
                 </Col>
 
             </Row>
