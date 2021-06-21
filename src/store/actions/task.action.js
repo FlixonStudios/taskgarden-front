@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export function getTasks(){
+export function getTaskList(){
     return async function(dispatch){
         try{
             let {data} = await axios.get(`/api/`,{
