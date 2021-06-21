@@ -14,21 +14,21 @@ function Dashboard(props) {
     let tasks = useSelector(state => state.tasks)
     const dispatch = useDispatch()
 
-    async function getTasks() {
-        try {
-            console.log("get tasks ran")
-            let {data} = await axios.get("/api/tasks", {
-                headers: {
-                    authorization: `Bearer ${localStorage.token}`
-                }
-            })
-            dispatch(setTaskList(data.tasks))
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     useEffect(() =>{
+        async function getTasks() {
+            try {
+                console.log("get tasks ran")
+                let {data} = await axios.get("/api/tasks", {
+                    headers: {
+                        authorization: `Bearer ${localStorage.token}`
+                    }
+                })
+                dispatch(setTaskList(data.tasks))
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
         getTasks()
     }, [])
 
