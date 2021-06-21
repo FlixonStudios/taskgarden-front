@@ -37,7 +37,7 @@ function Login({setAuth, show, setShow}) {
                     <Form>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control name="email" type="email" placeholder="Enter email" onChange={handleChange}/>
+                            <Form.Control name="email" type="email" placeholder="Enter email" onChange={handleChange} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
