@@ -24,7 +24,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     function handleQuadrantClick(value) {
         setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
     }
-
     async function submit() {
         try {
             await axios.post("/api/tasks/create", {...newTaskForm, dateStart: startDate, dateBy: endDate}, {
