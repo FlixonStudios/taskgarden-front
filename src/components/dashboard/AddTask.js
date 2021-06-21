@@ -3,33 +3,31 @@ import {Button, Modal, Form, ButtonGroup, ToggleButtonGroup, ToggleButton} from 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
-import {addTask} from "../../store/actions/task.action";
+
 
 function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
-    const [startDate, setStartDate] = useState(new Date()); // Datepicker
+    // Datepicker
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     // Add Task Modal
     function handleClose() { // Function to close Modal
         setAddTaskShow(false);
-        setNewTaskForm({dateBy: new Date()}) // Reset form after closing
     }
 
     // Form change
     function handleChange(e) {
         setNewTaskForm(prevState => ({...prevState, [e.target.name] : e.target.value }))
     }
-    function handleDateChange(date) {
-        setStartDate(date)
-        setNewTaskForm(prevState => ({...prevState, dateBy: date}))
-    }
+
+
     function handleQuadrantClick(value) {
         setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
     }
     async function submit() {
         try {
-            await axios.post("/api/tasks/create", newTaskForm,{
+            await axios.post("/api/tasks/create", {...newTaskForm, dateStart: startDate, dateBy: endDate}, {
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
                 }
@@ -57,14 +55,48 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
                         <Form.Label>Category</Form.Label>
                         <Form.Control name="category" type="text" placeholder="Category" onChange={handleChange}/>
                     </Form.Group>
+
                     <Form.Group>
-                        <Form.Label>Completed By</Form.Label>
-                        <div><DatePicker name="dateBy" selected={startDate} onChange={(date) => handleDateChange(date)} /></div>
+                        <Form.Label>Start Date</Form.Label>
+
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                selectsStart
+                                startDate={startDate}
+                                endDate={endDate}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                timeCaption="Time"
+                                dateFormat="d MMM yyyy, h:mm aa"
+                            />
+                        <br/>
+                            <Form.Label>Completed By</Form.Label>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                selectsEnd
+                                startDate={startDate}
+                                endDate={endDate}
+                                minDate={startDate}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                timeCaption="Time"
+                                dateFormat="d MMM yyyy, h:mm aa"
+                            />
                     </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control name="description" as="textarea" rows={3} placeholder="Enter a description" onChange={handleChange}/>
+                    </Form.Group>
+
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Select Plant</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select" onChange={handleChange}>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
