@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
+
 function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     // Datepicker
@@ -31,7 +32,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-
             handleClose()
             getTasks()
         } catch (e) {

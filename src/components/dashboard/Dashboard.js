@@ -14,23 +14,21 @@ function Dashboard(props) {
     let tasks = useSelector(state => state.tasks)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        async function getTasks() {
-            try {
-                console.log("get tasks ran")
-                let {data} = await axios.get("/api/tasks", {
-                    headers: {
-                        authorization: `Bearer ${localStorage.token}`
-                    }
-                })
-                dispatch(setTaskList(data.tasks))
-            } catch (e) {
-                console.log(e)
-            }
+    async function getTasks() {
+        try {
+            let {data} = await axios.get("/api/tasks", {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
+            dispatch(setTaskList(data.tasks))
+        } catch (e) {
+            console.log(e)
         }
+    }
 
+    useEffect(() => {
         getTasks()
-        console.log(tasks)
     }, [])
 
     return (
@@ -46,9 +44,12 @@ function Dashboard(props) {
                         <Toast onClose>
                             <Toast.Header>
                                 <strong className="mr-auto">{task.name}</strong>
-                                <small>{moment(task.dateBy).calendar(null, {sameElse: 'DD/MM/YY'})}</small>
+                                <small>Complete by: {moment(task.dateBy).calendar(null, {sameElse: 'DD/MM/YY'})}</small>
                             </Toast.Header>
-                            <Toast.Body>{task.category}</Toast.Body>
+                            <Toast.Body>
+                                <h6>Category: {task.category}</h6>
+                                <h6>{task.description}</h6>
+                            </Toast.Body>
                         </Toast>
                     </Col>
                     ))}
