@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Col, Container, Image, Row} from "react-bootstrap";
+import {Button, Col, Image, Row} from "react-bootstrap";
 import forestImg from "../../assets/img/nP5HPw4.jpeg"
 import Login from "./Login";
 import Register from "./Register";

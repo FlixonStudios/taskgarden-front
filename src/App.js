@@ -27,6 +27,11 @@ function App() {
             } catch (e) {
                 setAuth(false)
                 setUser(null)
+                await axios.delete("/api/logout", {
+                    headers: {
+                        authorization: `Bearer ${localStorage.token}`
+                    }
+                })
                 localStorage.removeItem("token")
             }
         }
@@ -34,10 +39,19 @@ function App() {
         setUserStats()
     }, [auth])
 
-    function logout() {
-        setAuth(false)
-        setUser(null)
-        localStorage.removeItem("token")
+    async function logout() {
+        try{
+            setAuth(false)
+            setUser(null)
+            await axios.delete("/api/logout", {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
+            localStorage.removeItem("token")
+        }catch (e) {
+            console.log(e)
+        }
     }
 
     return (
@@ -48,7 +62,7 @@ function App() {
                     <Route path="/" exact>
                         {!auth ? <LandingPage setAuth={setAuth}/> : <Dashboard setAuth={setAuth}/>}
                     </Route>
-                    <PrivateRouter auth={auth} path="/dashboard" Component={Dashboard} exact/>
+                    <PrivateRouter auth={auth} user={user} path="/dashboard" Component={Dashboard} exact/>
                     <PrivateRouter auth={auth} path="/garden" Component={Garden} exact/>
                     <PrivateRouter auth={auth} path="/florist" Component={Florist} exact/>
                 </Switch>
