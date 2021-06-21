@@ -21,7 +21,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
         setNewTaskForm(prevState => ({...prevState, [e.target.name] : e.target.value }))
     }
 
-
     function handleQuadrantClick(value) {
         setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
     }
