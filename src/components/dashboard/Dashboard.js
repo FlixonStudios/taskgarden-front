@@ -4,10 +4,12 @@ import AddTask from "./AddTask";
 import axios from "axios";
 import {useSelector, useDispatch} from "react-redux";
 import {setTaskList} from "../../store/actions/task.action";
+import Task from "./Task";
 
 function Dashboard(props) {
     // Add Task Modal
     const [addTaskShow, setAddTaskShow] = useState(false); // Modal appearance state
+
     const handleShow = () => setAddTaskShow(true); // Function to show Modal
 
     let tasks = useSelector(state => state.tasks)
@@ -28,7 +30,6 @@ function Dashboard(props) {
 
     useEffect(() =>{
         getTasks()
-        console.log(tasks)
     }, [])
 
     return (
@@ -41,13 +42,7 @@ function Dashboard(props) {
                 <Row>
                     {tasks.length > 0 && tasks.map(task => (
                     <Col md={4} key={task._id}>
-                        <Toast>
-                            <Toast.Header>
-                                <strong className="mr-auto">{task.name}</strong>
-                                {/*<small>{task.dateBy.split("T")[0]}</small>*/}
-                            </Toast.Header>
-                            <Toast.Body>{task.category}</Toast.Body>
-                        </Toast>
+                        <Task task={task}/>
                     </Col>
                     ))}
                 </Row>

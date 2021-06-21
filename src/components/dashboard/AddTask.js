@@ -20,16 +20,13 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     function handleChange(e) {
         setNewTaskForm(prevState => ({...prevState, [e.target.name] : e.target.value }))
     }
-
     function handleDateChange(date) {
         setStartDate(date)
         setNewTaskForm(prevState => ({...prevState, dateBy: date}))
     }
-
     function handleQuadrantClick(value) {
         setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
     }
-
     async function submit() {
         try {
             await axios.post("/api/tasks/create", newTaskForm,{
@@ -37,7 +34,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-
             handleClose()
             getTasks()
         } catch (e) {

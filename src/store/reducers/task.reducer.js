@@ -9,13 +9,12 @@ export function taskReducer(state=initialState, action){
             return{
                 ...state, tasks: action.payload
             }
-        case "ADD_TASK":
 
-            let newArrayWithAddedItem = state.tasks
-            newArrayWithAddedItem.push(action.payload)
-            console.log(newArrayWithAddedItem)
+        case "DELETE_TASK":
+            let arr = state.tasks
+            arr = arr.filter(el => el._id !== action.payload)
             return {
-                ...state, tasks: newArrayWithAddedItem
+                ...state, tasks: arr
             }
         default:
             return state

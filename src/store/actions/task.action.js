@@ -7,15 +7,9 @@ export function setTaskList(tasks){
     }
 }
 
-export function addTask(task){
-    return {
-        type: "ADD_TASK",
-        payload: task
-    }
-}
-
-export function removeTask(task){
+export function removeTask(id){
     return{
-
+        type: "DELETE_TASK",
+        payload: id
     }
 }
