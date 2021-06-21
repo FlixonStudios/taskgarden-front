@@ -13,7 +13,7 @@ function Task({task}) {
 
     function deleteTask(){
         removeTaskFromScreen();
-        deleteTaskFromDB().then(suc=> console.log("deleted"))
+        deleteTaskFromDB()
     }
     async function deleteTaskFromDB(){
         await axios.delete(`/api/tasks/delete/${task._id}`,{
@@ -28,14 +28,12 @@ function Task({task}) {
     }
 
     return (
-
             <Toast show={showTask} onClose={deleteTask}>
                 <Toast.Header>
                     <strong className="mr-auto">{task.name}</strong>
                 </Toast.Header>
                 <Toast.Body>{task.category}</Toast.Body>
             </Toast>
-
     );
 }
 
