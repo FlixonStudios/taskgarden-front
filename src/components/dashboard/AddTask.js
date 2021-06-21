@@ -27,8 +27,7 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
 
     async function submit() {
         try {
-            setNewTaskForm(prevState => ({...prevState, dateStart: startDate, dateBy: endDate}))
-            await axios.post("/api/tasks/create", newTaskForm,{
+            await axios.post("/api/tasks/create", {...newTaskForm, dateStart: startDate, dateBy: endDate}, {
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
                 }
@@ -67,6 +66,11 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                                 selectsStart
                                 startDate={startDate}
                                 endDate={endDate}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                timeCaption="Time"
+                                dateFormat="d MMM yyyy, h:mm aa"
                             />
                         <br/>
                             <Form.Label>Completed By</Form.Label>
@@ -77,9 +81,19 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                                 startDate={startDate}
                                 endDate={endDate}
                                 minDate={startDate}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                timeCaption="Time"
+                                dateFormat="d MMM yyyy, h:mm aa"
                             />
-
                     </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control name="description" as="textarea" rows={3} placeholder="Enter a description" onChange={handleChange}/>
+                    </Form.Group>
+
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Select Plant</Form.Label>
