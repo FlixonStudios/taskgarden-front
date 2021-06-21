@@ -4,7 +4,7 @@ import Task from "./Task";
 
 function SubBoard({tasks, isImportant, isUrgent, color}) {
 
-    const style = {...color, ...{"height":"100%"}}
+    const style = {...color, ...{"height":"40vh"}}
 
     return (
         <div style={style}>
