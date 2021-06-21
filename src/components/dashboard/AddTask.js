@@ -6,12 +6,10 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {addTask} from "../../store/actions/task.action";
 
-function AddTask({addTaskShow, setAddTaskShow}) {
+function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     const [startDate, setStartDate] = useState(new Date()); // Datepicker
 
-    let tasks = useSelector(state => state.tasks)
-    const dispatch = useDispatch()
     // Add Task Modal
     function handleClose() { // Function to close Modal
         setAddTaskShow(false);
@@ -39,8 +37,9 @@ function AddTask({addTaskShow, setAddTaskShow}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-            dispatch(addTask(newTaskForm))
+
             handleClose()
+            getTasks()
         } catch (e) {
             console.log(e)
         }

@@ -36,7 +36,7 @@ function Dashboard(props) {
             <Button variant="primary" onClick={handleShow}>
                 Add Task
             </Button>
-            <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} />
+            <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} getTasks={getTasks} />
             <Container>
                 <Row>
                     {tasks.length > 0 && tasks.map(task => (
