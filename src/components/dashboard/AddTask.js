@@ -3,12 +3,15 @@ import {Button, Modal, Form, ButtonGroup, ToggleButtonGroup, ToggleButton} from 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {addTask} from "../../store/actions/task.action";
 
-function AddTask({addTaskShow, setAddTaskShow, getTask}) {
-
+function AddTask({addTaskShow, setAddTaskShow}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     const [startDate, setStartDate] = useState(new Date()); // Datepicker
 
+    let tasks = useSelector(state => state.tasks)
+    const dispatch = useDispatch()
     // Add Task Modal
     function handleClose() { // Function to close Modal
         setAddTaskShow(false);
@@ -36,8 +39,8 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
+            dispatch(addTask(newTaskForm))
             handleClose()
-            getTask()
         } catch (e) {
             console.log(e)
         }
@@ -59,7 +62,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                         <Form.Label>Category</Form.Label>
                         <Form.Control name="category" type="text" placeholder="Category" onChange={handleChange}/>
                     </Form.Group>
-
                     <Form.Group>
                         <Form.Label>Completed By</Form.Label>
                         <div><DatePicker name="dateBy" selected={startDate} onChange={(date) => handleDateChange(date)} /></div>
