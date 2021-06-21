@@ -1,18 +1,8 @@
 import axios from "axios";
 
-export function getTaskList(){
-    return async function(dispatch){
-        try{
-            let {data} = await axios.get(`/api/`,{
-                headers: {
-                    authorization: `Bearer ${localStorage.token}`
-                }})
-            dispatch({
+export function setTaskList(tasks){
+    return {
                 type: "GET_TASKS",
-                payload: data.tasks
-            })
-        }catch(e){
-            console.log(e)
-        }
-    }
+                payload: tasks
+            }
 }

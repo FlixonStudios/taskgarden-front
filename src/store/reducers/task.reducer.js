@@ -1,17 +1,17 @@
 
 let initialState = {
-    tasks: [{
-        name: "test",
-        description: "what is redux, what is life?"
-    }]
+    tasks: []
 }
 
 export function taskReducer(state=initialState, action){
     switch (action.type){
         case "GET_TASKS":
-            console.log("get tasks reducer hit")
+            //console.log(action.payload)
+
             return{
-                ...state
+                ...state, tasks: action.payload
             }
-    }
+        default:
+            return state    }
+
 }
