@@ -7,22 +7,18 @@ import axios from "axios";
 function AddTask({addTaskShow, setAddTaskShow, getTask}) {
 
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
-    const [startDate, setStartDate] = useState(new Date()); // Datepicker
+    // Datepicker
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     // Add Task Modal
     function handleClose() { // Function to close Modal
         setAddTaskShow(false);
-        setNewTaskForm({dateBy: new Date()}) // Reset form after closing
     }
 
     // Form change
     function handleChange(e) {
         setNewTaskForm(prevState => ({...prevState, [e.target.name] : e.target.value }))
-    }
-
-    function handleDateChange(date) {
-        setStartDate(date)
-        setNewTaskForm(prevState => ({...prevState, dateBy: date}))
     }
 
     function handleQuadrantClick(value) {
@@ -31,6 +27,7 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
 
     async function submit() {
         try {
+            setNewTaskForm(prevState => ({...prevState, dateStart: startDate, dateBy: endDate}))
             await axios.post("/api/tasks/create", newTaskForm,{
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
@@ -60,14 +57,33 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                         <Form.Control name="category" type="text" placeholder="Category" onChange={handleChange}/>
                     </Form.Group>
 
+
                     <Form.Group>
-                        <Form.Label>Completed By</Form.Label>
-                        <div><DatePicker name="dateBy" selected={startDate} onChange={(date) => handleDateChange(date)} /></div>
+                        <Form.Label>Start Date</Form.Label>
+
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                selectsStart
+                                startDate={startDate}
+                                endDate={endDate}
+                            />
+                        <br/>
+                            <Form.Label>Completed By</Form.Label>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                selectsEnd
+                                startDate={startDate}
+                                endDate={endDate}
+                                minDate={startDate}
+                            />
+
                     </Form.Group>
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Select Plant</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select" onChange={handleChange}>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
