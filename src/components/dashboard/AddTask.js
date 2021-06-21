@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
 import {Button, Modal, Form, ButtonGroup, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import DatePicker from "react-datepicker";
+import moment from "moment"
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 function AddTask({addTaskShow, setAddTaskShow, getTask}) {
 
-    const [newTaskForm, setNewTaskForm] = useState({}) // Form State
+    const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     const [startDate, setStartDate] = useState(new Date()); // Datepicker
 
     // Add Task Modal
     function handleClose() { // Function to close Modal
         setAddTaskShow(false);
-        setNewTaskForm({}) // Reset form after closing
+        setNewTaskForm({dateBy: new Date()}) // Reset form after closing
     }
 
     // Form change
