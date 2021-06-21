@@ -15,7 +15,6 @@ function Dashboard(props) {
 
     async function getTasks() {
         try {
-            console.log("get tasks ran")
             let {data} = await axios.get("/api/tasks", {
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
@@ -29,6 +28,7 @@ function Dashboard(props) {
 
     useEffect(() =>{
         getTasks()
+        console.log(tasks)
     }, [])
 
     return (
@@ -36,7 +36,7 @@ function Dashboard(props) {
             <Button variant="primary" onClick={handleShow}>
                 Add Task
             </Button>
-            <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} />
+            <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} getTasks={getTasks} />
             <Container>
                 <Row>
                     {tasks.length > 0 && tasks.map(task => (
@@ -44,7 +44,7 @@ function Dashboard(props) {
                         <Toast>
                             <Toast.Header>
                                 <strong className="mr-auto">{task.name}</strong>
-                                <small>{task.dateBy.split("T")[0]}</small>
+                                {/*<small>{task.dateBy.split("T")[0]}</small>*/}
                             </Toast.Header>
                             <Toast.Body>{task.category}</Toast.Body>
                         </Toast>

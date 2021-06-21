@@ -6,12 +6,18 @@ let initialState = {
 export function taskReducer(state=initialState, action){
     switch (action.type){
         case "GET_TASKS":
-            //console.log(action.payload)
-
             return{
                 ...state, tasks: action.payload
             }
-        default:
-            return state    }
+        case "ADD_TASK":
 
+            let newArrayWithAddedItem = state.tasks
+            newArrayWithAddedItem.push(action.payload)
+            console.log(newArrayWithAddedItem)
+            return {
+                ...state, tasks: newArrayWithAddedItem
+            }
+        default:
+            return state
+    }
 }

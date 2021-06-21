@@ -3,9 +3,10 @@ import {Button, Modal, Form, ButtonGroup, ToggleButtonGroup, ToggleButton} from 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {addTask} from "../../store/actions/task.action";
 
-function AddTask({addTaskShow, setAddTaskShow, getTask}) {
-
+function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     const [startDate, setStartDate] = useState(new Date()); // Datepicker
 
@@ -36,8 +37,9 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
+
             handleClose()
-            getTask()
+            getTasks()
         } catch (e) {
             console.log(e)
         }
@@ -59,7 +61,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTask}) {
                         <Form.Label>Category</Form.Label>
                         <Form.Control name="category" type="text" placeholder="Category" onChange={handleChange}/>
                     </Form.Group>
-
                     <Form.Group>
                         <Form.Label>Completed By</Form.Label>
                         <div><DatePicker name="dateBy" selected={startDate} onChange={(date) => handleDateChange(date)} /></div>
