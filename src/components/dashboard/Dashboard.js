@@ -7,6 +7,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {setTaskList} from "../../store/actions/task.action";
 import Task from "./Task";
 import Taskboard from "./Taskboard";
+import DailiesBar from "./DailiesBar";
 
 function Dashboard(props) {
     // Add Task Modal
@@ -36,6 +37,7 @@ function Dashboard(props) {
 
     return (
         <>
+            <DailiesBar />
             <Button variant="primary" onClick={handleShow}>
                 Add Task
             </Button>
