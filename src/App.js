@@ -60,7 +60,7 @@ function App() {
             <BrowserRouter>
                 {auth && <Navigation logout={logout}/>}
                 <Switch>
-                    <Route path="/admintest" >
+                    <Route path="/admin" >
                         <AdminPage/>
                     </Route>
                     <Route path="/" exact>

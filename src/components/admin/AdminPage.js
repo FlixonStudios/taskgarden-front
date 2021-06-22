@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Form} from "react-bootstrap";
+import {Button, Form, Container} from "react-bootstrap";
 import axios from "axios";
 
 function AdminPage(props) {
@@ -7,12 +7,32 @@ function AdminPage(props) {
     const [url, setUrl] = useState("")
     const [newPlant, setNewPlant] = useState({})
 
-    //to upload the image onto the cloud
+
+
+//to upload the image onto the cloud
     const uploadImage = () =>{
+        const data = createCloudinaryFormData();
+        if (isFileUploaded(data)){
+            uploadToCloudinary(data)
+        }
+    }
+
+    function createCloudinaryFormData() {
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "taskgarden")
         data.append("cloud_name", "seiproj3images")
+        return data;
+    }
+
+    function isFileUploaded(data){
+        if (!data.get("file")){
+            console.log("Please upload a file")
+        }
+        return (data.get("file"))
+    }
+
+    function uploadToCloudinary(data){
         fetch("https://api.cloudinary.com/v1_1/seiproj3images/image/upload", {
             method: "post",
             body: data
@@ -46,7 +66,7 @@ function AdminPage(props) {
     }
 
     return (
-        <div>
+        <Container>
             <Form>
                 <Form.Group>
                     <Form.Label>Name</Form.Label>
@@ -81,7 +101,7 @@ function AdminPage(props) {
             </Form>
 
 
-        </div>
+        </Container>
 
     );
 }
