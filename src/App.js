@@ -24,8 +24,8 @@ function App() {
                         authorization: `Bearer ${localStorage.token}`
                     }
                 })
-                if(data.user.isAdmin) setAdmin(true)
                 setAuth(true)
+                if(data.user.isAdmin) setAdmin(true)
                 setUser(data.user)
             } catch (e) {
                 setAdmin(false)
@@ -39,7 +39,6 @@ function App() {
                 localStorage.removeItem("token")
             }
         }
-
         setUserStats()
     }, [auth])
 
@@ -64,16 +63,13 @@ function App() {
             <BrowserRouter>
                 {auth && <Navigation admin={admin} logout={logout}/>}
                 <Switch>
-                    <Route path="/admin" >
-                        <AdminPage/>
-                    </Route>
                     <Route path="/" exact>
-                        {!auth ? <LandingPage setAuth={setAuth}/> : <Dashboard setAuth={setAuth}/>}
+                        {(!auth) ? <LandingPage setAuth={setAuth}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
                     </Route>
                     <PrivateRouter auth={auth} admin={admin} user={user} path="/dashboard" Component={Dashboard} exact/>
                     <PrivateRouter auth={auth} admin={admin} path="/garden" Component={Garden} exact/>
                     <PrivateRouter auth={auth} admin={admin} path="/florist" Component={Florist} exact/>
-                    <AdminRouter admin={admin} path="/admin" Component={AdminPage} exact/>
+                    <PrivateRouter auth={auth} admin={admin} path="/admin" Component={AdminPage} exact/>
                 </Switch>
             </BrowserRouter>
         </div>
@@ -83,28 +79,18 @@ function App() {
 function PrivateRouter({auth, admin, Component, path, location, ...rest}) {
     return (
         <>
-            {(auth && !admin) ?
-                <Route {...rest}>
-                    <Component/>
-                </Route> : <Redirect to={{
+            {(!auth) ?
+                <Redirect to={{
                     pathname: "/",
                     state: {from: location}
-                }}/>
-            }
-        </>
-    )
-}
-
-function AdminRouter({admin, Component, path, location, ...rest}) {
-    return (
-        <>
-            {(admin) ?
+                }}/> :
+                (!admin) ?
                 <Route {...rest}>
                     <Component/>
-                </Route> : <Redirect to={{
-                    pathname: "/",
-                    state: {from: location}
-                }}/>
+                </Route> :
+                    <Route {...rest}>
+                        <AdminPage />
+                    </Route>
             }
         </>
     )
