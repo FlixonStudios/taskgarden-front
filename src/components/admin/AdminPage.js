@@ -74,7 +74,6 @@ function AdminPage(props) {
 
     //to call /admin/dailies/create
     async function submitDailies() {
-        console.log(newDailies)
         try {
             await axios.post("/api/admin/dailies/create", newDailies, {
                 headers: {
