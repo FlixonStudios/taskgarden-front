@@ -13,6 +13,7 @@ import AdminPage from "./components/admin/AdminPage";
 
 function App() {
     const [auth, setAuth] = useState(false)
+    const [admin, setAdmin] = useState(false)
     const [user, setUser] = useState(null)
 
     useEffect(() => {
@@ -24,8 +25,10 @@ function App() {
                     }
                 })
                 setAuth(true)
+                if(data.user.isAdmin) setAdmin(true)
                 setUser(data.user)
             } catch (e) {
+                setAdmin(false)
                 setAuth(false)
                 setUser(null)
                 await axios.delete("/api/logout", {
@@ -36,12 +39,12 @@ function App() {
                 localStorage.removeItem("token")
             }
         }
-
         setUserStats()
     }, [auth])
 
     async function logout() {
         try{
+            setAdmin(false)
             setAuth(false)
             setUser(null)
             await axios.delete("/api/logout", {
@@ -58,34 +61,28 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                {auth && <Navigation logout={logout}/>}
+                {auth && <Navigation admin={admin} logout={logout}/>}
                 <Switch>
-                    <Route path="/admin" >
-                        <AdminPage/>
-                    </Route>
                     <Route path="/" exact>
-                        {!auth ? <LandingPage setAuth={setAuth}/> : <Dashboard setAuth={setAuth}/>}
+                        {(!auth) ? <LandingPage setAuth={setAuth} setAdmin={setAdmin}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
                     </Route>
-                    <PrivateRouter auth={auth} user={user} path="/dashboard" Component={Dashboard} exact/>
-                    <PrivateRouter auth={auth} path="/garden" Component={Garden} exact/>
-                    <PrivateRouter auth={auth} path="/florist" Component={Florist} exact/>
+                    <PrivateRouter auth={auth} admin={admin} user={user} path="/dashboard" Component={Dashboard} exact/>
+                    <PrivateRouter auth={auth} admin={admin} path="/garden" Component={Garden} exact/>
+                    <PrivateRouter auth={auth} admin={admin} path="/florist" Component={Florist} exact/>
                 </Switch>
             </BrowserRouter>
         </div>
     );
 }
 
-function PrivateRouter({auth, Component, path, location, ...rest}) {
-    //if auth is true then show Route else redirect to login
+function PrivateRouter({auth, admin, Component, path, location, ...rest}) {
     return (
         <>
-            {(auth) ?
-                <Route {...rest}>
-                    <Component/>
-                </Route> : <Redirect to={{
-                    pathname: "/",
-                    state: {from: location}
-                }}/>
+            {(auth && !admin) ?
+                    <Route path={path} exact>
+                        <Component {...rest}/>
+                    </Route> :
+                <Redirect to={{pathname: "/", state: {from: location}}}/>
             }
         </>
     )
