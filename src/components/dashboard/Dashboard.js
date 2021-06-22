@@ -8,7 +8,7 @@ import {setTaskList} from "../../store/actions/task.action";
 import {isAuth} from "../../lib/checks";
 import Taskboard from "./Taskboard";
 
-function Dashboard({setAuth}) {
+function Dashboard({auth, setAuth}) {
     // Add Task Modal
     const [addTaskShow, setAddTaskShow] = useState(false); // Modal appearance state
 
@@ -18,7 +18,8 @@ function Dashboard({setAuth}) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        setAuth(isAuth())
+        console.log(auth)
+        isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
         getTasks()
     }, [])
 

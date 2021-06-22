@@ -65,11 +65,12 @@ function App() {
 }
 
 function PrivateRouter({auth, admin, Component, path, location, ...rest}) {
+    console.log(auth)
     return (
         <>
             {(auth && !admin) ?
                     <Route path={path} exact>
-                        <Component {...rest}/>
+                        <Component auth={auth} {...rest}/>
                     </Route> :
                 <Redirect to={{pathname: "/", state: {from: location}}}/>
             }
