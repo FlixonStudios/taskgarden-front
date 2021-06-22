@@ -9,6 +9,7 @@ function Florist({auth, setAuth}) {
 
     useEffect(()=>{
         console.log(auth)
+        isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
         setAuth(isAuth())
         getFloristPlants()
     },[])

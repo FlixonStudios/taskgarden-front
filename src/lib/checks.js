@@ -7,9 +7,10 @@ export async function isAuth(){
                 authorization: `Bearer ${localStorage.token}`
             }
         })
-        //console.log(user)
+        console.log(isAuthenticated)
         return true
     }catch(e){
+        console.log(e.response)
         return false
     }
 }
