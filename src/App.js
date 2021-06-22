@@ -61,7 +61,7 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                {auth && <Navigation admin={admin} logout={logout}/>}
+                {auth && <Navigation user={user} admin={admin} logout={logout}/>}
                 <Switch>
                     <Route path="/" exact>
                         {(!auth) ? <LandingPage setAuth={setAuth} setAdmin={setAdmin}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
