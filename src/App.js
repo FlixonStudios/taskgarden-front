@@ -21,15 +21,16 @@ function App() {
     useEffect(() => {
         //setAuth(isAuth())
         //setUserStats(setAuth, setUser, setAdmin)
-        getUser().then(user =>{
-            setAdmin(user.isAdmin)
-            setAuth(true)
-            setUser(user)
-        }).catch(err =>{
-            console.log(err)
+        getUser().then(e => {
+            if (e.user) {
+                setAdmin(e.user.isAdmin)
+                setAuth(true)
+                setUser(e.user)
+            } else {
+                console.log(e.message)
+            }
         })
-        console.log(auth)
-    }, [])
+    }, [auth])
 
     async function logout() {
         try{

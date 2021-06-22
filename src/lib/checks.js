@@ -21,10 +21,8 @@ export async function getUser(){
                 authorization: `Bearer ${localStorage.token}`
             }
         })
-        console.log(user)
         return user.data
     }catch(e){
-        console.log(e)
         return {message: "Failed to get user"}
     }
 }
