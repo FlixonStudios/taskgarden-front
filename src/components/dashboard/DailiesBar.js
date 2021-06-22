@@ -32,12 +32,16 @@ function DailiesBar(props) {
         }
     })
 
-    function handleClick() {
-
+    async function handleClick() {
+        await axios.post("/api/user/dailies/update", daily, {
+            headers: {
+                authorization: `Bearer ${localStorage.token}`
+            }
+        })
     }
 
     return (
-        <Container style={containerStyle} >
+        <Container style={containerStyle} className="mt-3" >
             <Row className="align-items-center">
                 <Col md={9}>
                     Dailies
