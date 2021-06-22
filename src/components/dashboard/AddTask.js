@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
-import {Button, Modal, Form, ButtonGroup, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
+import {Button, Modal, Form, Row, Container, Col} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-
 
 function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     // Datepicker
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [selected, setSelected] = useState({IU: "none", IN: "none", UU: "none", UN: "none"})
 
     // Add Task Modal
     function handleClose() { // Function to close Modal
         setAddTaskShow(false);
+        setSelected({IU: "none", IN: "none", UU: "none", UN: "none"})
     }
 
     // Form change
@@ -21,9 +22,18 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
         setNewTaskForm(prevState => ({...prevState, [e.target.name] : e.target.value }))
     }
 
-    function handleQuadrantClick(value) {
+    function handleQuadrantClick(e, value) {
+        if(selected[e.target.attributes.name.value] === "none") {
+            setSelected({IU: "none", IN: "none", UU: "none", UN: "none"})
+            setSelected(prevState => ({...prevState, [e.target.attributes.name.value]: "3px solid yellow" }))
+        }
+        else {
+            setSelected(prevState => ({...prevState, [e.target.attributes.name.value]: "none"}))
+        }
         setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
+
     }
+
     async function submit() {
         try {
             await axios.post("/api/tasks/create", {...newTaskForm, dateStart: startDate, dateBy: endDate}, {
@@ -57,7 +67,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
 
                     <Form.Group>
                         <Form.Label>Start Date</Form.Label>
-
                             <DatePicker
                                 selected={startDate}
                                 onChange={(date) => setStartDate(date)}
@@ -92,7 +101,6 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
                         <Form.Control name="description" as="textarea" rows={3} placeholder="Enter a description" onChange={handleChange}/>
                     </Form.Group>
 
-
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Select Plant</Form.Label>
                         <Form.Control as="select" onChange={handleChange}>
@@ -103,29 +111,41 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
                         </Form.Control>
                     </Form.Group>
 
-                        <ToggleButtonGroup name="matrix" size="lg" onChange={handleQuadrantClick}>
-                            <ToggleButton
-                                variant="secondary"
-                                value={{isImportant: true, isUrgent: true}}>
+                    <Container>
+                        <Row>
+                            <Col style={{
+                                backgroundColor: "rgba(231, 85, 85,1)",
+                                border: `${selected.IU}`
+                            }}
+                                 name="IU"
+                                 onClick={(e) => handleQuadrantClick(e, {isImportant: true, isUrgent: true})}>
                                 Important Urgent
-                            </ToggleButton>
-                            <ToggleButton
-                                variant="secondary"
-                                value={{isImportant: true, isUrgent: false}}>
+                            </Col>
+                            <Col style={{backgroundColor: "rgba(224, 159, 159)",
+                                border: `${selected.IN}`
+                            }}
+                                 name="IN"
+                                 onClick={(e) => handleQuadrantClick(e, {isImportant: true, isUrgent: false})}>
                                 Important Not-Urgent
-                            </ToggleButton>
-                    <br/>
-                            <ToggleButton
-                                variant="secondary"
-                                value={{isImportant: false, isUrgent: true}}>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={{backgroundColor: "rgba(241, 181, 121,1)",
+                                border: `${selected.UU}`
+                            }}
+                                 name="UU"
+                                 onClick={(e) => handleQuadrantClick(e, {isImportant: false, isUrgent: true})}>
                                 Unimportant Urgent
-                            </ToggleButton>
-                            <ToggleButton
-                                variant="secondary"
-                                value={{isImportant: false, isUrgent: false}}>
+                        </Col>
+                            <Col style={{backgroundColor: "rgba(54, 150, 148,1)",
+                                border: `${selected.UN}`
+                            }}
+                                 name="UN"
+                                 onClick={(e) => handleQuadrantClick(e, {isImportant: false, isUrgent: false})}>
                                 Unimportant Not-Urgent
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                        </Col>
+                    </Row>
+                    </Container>
                     <br/>
 
                     <Button variant="primary" onClick={submit}>
