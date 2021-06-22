@@ -26,12 +26,12 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
         if(selected[e.target.attributes.name.value] === "none") {
             setSelected({IU: "none", IN: "none", UU: "none", UN: "none"})
             setSelected(prevState => ({...prevState, [e.target.attributes.name.value]: "3px solid yellow" }))
+            setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
         }
         else {
             setSelected(prevState => ({...prevState, [e.target.attributes.name.value]: "none"}))
+            setNewTaskForm(prevState => ({...prevState, isImportant: false, isUrgent: false}))
         }
-        setNewTaskForm(prevState => ({...prevState, isImportant: value.isImportant, isUrgent: value.isUrgent}))
-
     }
 
     async function submit() {
