@@ -1,8 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import floristImg from '../../assets/img/florist HD.jpg'
+import {Col, Image, Card} from "react-bootstrap";
+import axios from "axios";
 
-function Florist(props) {
+
+function Florist({setAuth}) {
+
+    useEffect(()=>{
+
+        getFloristPlants()
+    },[])
+
+    async function getFloristPlants(){
+        try{
+            let floristPlants = await axios.get('/api/florist', {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }})
+        }catch(e){
+            console.log(e.response)
+        }
+    }
+
     return (
-        <div>Florist</div>
+        <div>
+            <Col md={5}>
+                <Image src={floristImg} />
+            </Col>
+            <Col md={7}>
+                <Card>
+                    <Card.Img src={""}/>
+                </Card>
+            </Col>
+        </div>
     );
 }
 
