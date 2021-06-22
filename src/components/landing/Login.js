@@ -3,7 +3,7 @@ import {Modal, Button, Form} from "react-bootstrap";
 import axios from "axios";
 import {useHistory} from "react-router-dom"
 
-function Login({setAuth, show, setShow}) {
+function Login({setAuth, setAdmin, show, setShow}) {
     // Modal Open/Close State
     const handleClose = () => setShow(false);
 
@@ -13,8 +13,9 @@ function Login({setAuth, show, setShow}) {
 
     async function submit() {
         try {
-            let {data: {token}} = await axios.post("/api/login", cred)
-            localStorage.setItem("token", token)
+            let {data} = await axios.post("/api/login", cred)
+            localStorage.setItem("token", data.token)
+            if(data.user.isAdmin) setAdmin(true)
             setAuth(true)
             setShow(false)
             history.push("/dashboard")

@@ -64,12 +64,11 @@ function App() {
                 {auth && <Navigation admin={admin} logout={logout}/>}
                 <Switch>
                     <Route path="/" exact>
-                        {(!auth) ? <LandingPage setAuth={setAuth}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
+                        {(!auth) ? <LandingPage setAuth={setAuth} setAdmin={setAdmin}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
                     </Route>
                     <PrivateRouter auth={auth} admin={admin} user={user} path="/dashboard" Component={Dashboard} exact/>
                     <PrivateRouter auth={auth} admin={admin} path="/garden" Component={Garden} exact/>
                     <PrivateRouter auth={auth} admin={admin} path="/florist" Component={Florist} exact/>
-                    <PrivateRouter auth={auth} admin={admin} path="/admin" Component={AdminPage} exact/>
                 </Switch>
             </BrowserRouter>
         </div>
@@ -79,18 +78,11 @@ function App() {
 function PrivateRouter({auth, admin, Component, path, location, ...rest}) {
     return (
         <>
-            {(!auth) ?
-                <Redirect to={{
-                    pathname: "/",
-                    state: {from: location}
-                }}/> :
-                (!admin) ?
-                <Route {...rest}>
-                    <Component/>
-                </Route> :
-                    <Route {...rest}>
-                        <AdminPage />
-                    </Route>
+            {(auth && !admin) ?
+                    <Route path={path} exact>
+                        <Component {...rest}/>
+                    </Route> :
+                <Redirect to={{pathname: "/", state: {from: location}}}/>
             }
         </>
     )
