@@ -9,6 +9,7 @@ import Navigation from "./components/lib/Navigation";
 import Dashboard from "./components/dashboard/Dashboard";
 import Garden from "./components/garden/Garden";
 import Florist from "./components/florist/Florist";
+import AdminPage from "./components/admin/AdminPage";
 
 function App() {
     const [auth, setAuth] = useState(false)
@@ -59,6 +60,9 @@ function App() {
             <BrowserRouter>
                 {auth && <Navigation logout={logout}/>}
                 <Switch>
+                    <Route path="/admintest" >
+                        <AdminPage/>
+                    </Route>
                     <Route path="/" exact>
                         {!auth ? <LandingPage setAuth={setAuth}/> : <Dashboard setAuth={setAuth}/>}
                     </Route>
