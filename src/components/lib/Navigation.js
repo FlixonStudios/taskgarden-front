@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import coinImg from "../../assets/img/pixel-art-bitcoin-gold-coin.png"
 
 function Navigation({admin, logout, user}) {
-    console.log(user)
+
     return (
         <Navbar expand="lg" id="navbar">
             <Navbar.Brand id="navbarBrand">

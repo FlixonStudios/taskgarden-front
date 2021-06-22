@@ -5,10 +5,10 @@ import axios from "axios";
 import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
 import {setTaskList} from "../../store/actions/task.action";
-import Task from "./Task";
+import {isAuth} from "../../lib/checks";
 import Taskboard from "./Taskboard";
 
-function Dashboard(props) {
+function Dashboard({setAuth}) {
     // Add Task Modal
     const [addTaskShow, setAddTaskShow] = useState(false); // Modal appearance state
 
@@ -16,6 +16,11 @@ function Dashboard(props) {
 
     let tasks = useSelector(state => state.tasks)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        setAuth(isAuth())
+        getTasks()
+    }, [])
 
     async function getTasks() {
         try {
@@ -29,10 +34,6 @@ function Dashboard(props) {
             console.log(e)
         }
     }
-
-    useEffect(() => {
-        getTasks()
-    }, [])
 
     return (
         <>

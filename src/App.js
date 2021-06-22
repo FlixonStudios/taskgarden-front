@@ -10,6 +10,8 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Garden from "./components/garden/Garden";
 import Florist from "./components/florist/Florist";
 import AdminPage from "./components/admin/AdminPage";
+import {isAuth, setUserStats, getUser} from "./lib/checks";
+
 
 function App() {
     const [auth, setAuth] = useState(false)
@@ -17,30 +19,17 @@ function App() {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        async function setUserStats() {
-            try {
-                let {data} = await axios.get("/api/user", {
-                    headers: {
-                        authorization: `Bearer ${localStorage.token}`
-                    }
-                })
-                setAuth(true)
-                if(data.user.isAdmin) setAdmin(true)
-                setUser(data.user)
-            } catch (e) {
-                setAdmin(false)
-                setAuth(false)
-                setUser(null)
-                await axios.delete("/api/logout", {
-                    headers: {
-                        authorization: `Bearer ${localStorage.token}`
-                    }
-                })
-                localStorage.removeItem("token")
-            }
-        }
-        setUserStats()
-    }, [auth])
+        //setAuth(isAuth())
+        //setUserStats(setAuth, setUser, setAdmin)
+        getUser().then(user =>{
+            setAdmin(user.isAdmin)
+            setAuth(true)
+            setUser(user)
+        }).catch(err =>{
+            console.log(err)
+        })
+        console.log(auth)
+    }, [])
 
     async function logout() {
         try{

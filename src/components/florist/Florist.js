@@ -2,12 +2,14 @@ import React, {useEffect} from 'react';
 import floristImg from '../../assets/img/florist HD.jpg'
 import {Col, Image, Card} from "react-bootstrap";
 import axios from "axios";
+import {isAuth} from "../../lib/checks";
 
 
-function Florist({setAuth}) {
+function Florist({auth, setAuth}) {
 
     useEffect(()=>{
-
+        console.log(auth)
+        setAuth(isAuth())
         getFloristPlants()
     },[])
 
