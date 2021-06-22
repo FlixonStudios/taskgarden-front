@@ -35,7 +35,7 @@ function AdminPage(props) {
     async function submit() {
         console.log(newPlant)
         try {
-            await axios.post("/api/florist/create", newPlant, {
+            await axios.post("/api/admin/florist/create", newPlant, {
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
                 }
