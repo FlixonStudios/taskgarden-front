@@ -24,7 +24,6 @@ function Dashboard({auth, setAuth}) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log(auth)
         isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
         getTasks()
     }, [])
@@ -52,7 +51,6 @@ function Dashboard({auth, setAuth}) {
             <Container>
                 <Taskboard tasks={tasks}/>
             </Container>
-
         </>
     );
 }

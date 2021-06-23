@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import floristImg from '../../assets/img/florist HD.jpg'
-import {Col, Image, Card, Container, Row, CardGroup, Button} from "react-bootstrap";
+import {Col, Image, Card, Container, Row, Button} from "react-bootstrap";
 import axios from "axios";
 import {isAuth} from "../../lib/checks";
 import coinImg from "../../assets/img/pixel-art-bitcoin-gold-coin.png"
@@ -10,11 +10,10 @@ function Florist({auth, setAuth}) {
     const [floristPlants, setFloristPlants] = useState([])
 
     useEffect(()=>{
-        console.log(auth)
         isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
         setAuth(isAuth())
         getFloristPlants()
-    },[])
+    },[setAuth])
 
     async function getFloristPlants(){
         try{

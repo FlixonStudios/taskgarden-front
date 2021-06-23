@@ -10,7 +10,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Garden from "./components/garden/Garden";
 import Florist from "./components/florist/Florist";
 import AdminPage from "./components/admin/AdminPage";
-import {isAuth, setUserStats, getUser} from "./lib/checks";
+import {getUser} from "./lib/checks";
 
 
 function App() {
@@ -66,7 +66,6 @@ function App() {
 }
 
 function PrivateRouter({auth, admin, Component, path, location, ...rest}) {
-    console.log(auth)
     return (
         <>
             {(auth && !admin) ?

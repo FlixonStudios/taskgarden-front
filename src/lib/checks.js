@@ -2,12 +2,11 @@ import axios from "axios";
 
 export async function isAuth(){
     try{
-        let isAuthenticated = await axios.get('/api/check', {
+        await axios.get('/api/check', {
             headers: {
                 authorization: `Bearer ${localStorage.token}`
             }
         })
-        console.log(isAuthenticated)
         return true
     }catch(e){
         console.log(e.response)
