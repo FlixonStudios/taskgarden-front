@@ -1,9 +1,15 @@
-import axios from "axios";
 
 export function setTaskList(tasks){
     return {
                 type: "GET_TASKS",
                 payload: tasks
+    }
+}
+
+export function editTask(id) {
+    return {
+        type: "GET_TASK",
+        payload: id
     }
 }
 
