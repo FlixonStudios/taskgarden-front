@@ -1,8 +1,15 @@
 import React from 'react';
+import {Col, Container} from "react-bootstrap";
 
 function Garden(props) {
     return (
-        <div>Garden</div>
+        <Container>
+            <h2>Garden</h2>
+            <Col>
+                <div>Inventory</div>
+            </Col>
+        </Container>
+
     );
 }
 
