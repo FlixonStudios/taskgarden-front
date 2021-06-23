@@ -49,7 +49,7 @@ function Dashboard({auth, setAuth}) {
             </Container>
             <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} getTasks={getTasks} />
             <Container>
-                <Taskboard tasks={tasks}/>
+                <Taskboard tasks={tasks} getTasks={getTasks}/>
             </Container>
         </>
     );

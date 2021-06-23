@@ -8,8 +8,8 @@ function Task({task}) {
     const [showTask, setShowTask] = useState(true)
     const dispatch = useDispatch()
 
-
-    function deleteTask(){
+    function deleteTask(e){
+        e.stopPropagation()
         removeTaskFromScreen();
         deleteTaskFromDB()
     }
