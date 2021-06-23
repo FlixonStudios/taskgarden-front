@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import floristImg from '../../assets/img/florist HD.jpg'
-import {Col, Image, Card, Container, Row, Button} from "react-bootstrap";
+import {Col, Image, Card, Container, Row, Button, Modal} from "react-bootstrap";
 import axios from "axios";
 import {isAuth} from "../../lib/checks";
 import coinImg from "../../assets/img/pixel-art-bitcoin-gold-coin.png"
 
 
-function Florist({auth, setAuth}) {
+function Florist({user, auth, setAuth, admin}) {
+
     const [floristPlants, setFloristPlants] = useState([])
+    const [showInsufficientCoin, setShowInsufficientCoin] = useState(false);
+
+    const handleClose = () => setShowInsufficientCoin(false);
 
     useEffect(()=>{
         isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
-        setAuth(isAuth())
         getFloristPlants()
-    },[setAuth])
+    },[])
 
     async function getFloristPlants(){
         try{
@@ -27,15 +30,21 @@ function Florist({auth, setAuth}) {
         }
     }
 
-    async function buyPlant(){
+    async function buyPlant(e){
         try{
-            let floristPlants = await axios.get('/api/florist', {
-                headers: {
-                    authorization: `Bearer ${localStorage.token}`
-                }})
-            setFloristPlants(floristPlants.data.payload)
+            //finding the array of the plant clicked
+            let price = floristPlants.find(({_id}) => _id == e.target.value)
+            if(price.price > user.coins){
+                return setShowInsufficientCoin(true)
+            }
+            // await axios.get('api/',{
+            //     headers: {
+            //         authorization: `Bearer ${localStorage.token}`
+            //     }})
+            console.log('this works')
+
         }catch(e){
-            console.log(e.response)
+            console.log(e)
         }
     }
 
@@ -47,9 +56,10 @@ function Florist({auth, setAuth}) {
                 </Col>
                 <Col md={7}>
                     <Row md={3} xs={1} className="g-4">
+
                         {floristPlants.length > 0 && floristPlants.map(plant => (
-                            <Col>
-                                <Card key={plant._id} style={{width: "9rem"}} bg="warning">
+                            <Col key={plant._id}>
+                                <Card  style={{width: "9rem"}} bg="warning">
                                     <Card.Img variant="top" src={plant.images[1]} style={{width: "110px", height: "110px"}}  />
                                     <Card.Body>
                                         <Card.Title>{plant.name}</Card.Title>
@@ -57,12 +67,25 @@ function Florist({auth, setAuth}) {
                                             <Image style={{width: "25px", height: "25px"}} src={coinImg} />
                                             {plant.price}
                                         </Card.Text>
-                                        <Button>Buy</Button>
+                                        <Button onClick={buyPlant} value={plant._id}>Buy</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
                         ))}
                     </Row>
+                    <Modal
+                        show={showInsufficientCoin}
+                        onHide={handleClose}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>u no moneh</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            You have insufficient coins for this purchase. Please do more dailies.
+                        </Modal.Body>
+                    </Modal>
                 </Col>
             </Row>
 

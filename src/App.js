@@ -58,7 +58,7 @@ function App() {
                     </Route>
                     <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} user={user} path="/dashboard" Component={Dashboard} exact/>
                     <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} path="/garden" Component={Garden} exact/>
-                    <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} path="/florist" Component={Florist} exact/>
+                    <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} user={user} path="/florist" Component={Florist} exact/>
                 </Switch>
             </BrowserRouter>
         </div>
