@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import Task from "./Task";
 import TaskView from "./TaskView";
@@ -24,6 +24,11 @@ function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}
     // Clicked task state
     const [clickedTask, setClickedTask] = useState({})
 
+
+    useEffect(()=>{
+        console.log(tasks)
+    },[])
+
     function handleEditTask(e, task) {
         setEditTaskShow(true)
         setClickedTask(task)
@@ -38,13 +43,7 @@ function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}
                 </Col>
             </Row>
             <Row className="mt-3">
-            {tasks.length > 0 && tasks.map(task => (
-                    (task.isImportant === isImportant && task.isUrgent === isUrgent) &&
-                    <Col md={6} key={task._id} onClick={(e) => handleEditTask(e, task)}>
-                        <Task task={task}/>
-                    </Col>
-                )
-            )}
+                <RenderTasks tasks={tasks} isImportant={isImportant} isUrgent={isUrgent} handleEditTask={handleEditTask}/>
             </Row>
             <TaskView editTaskShow={editTaskShow}
                       setEditTaskShow={setEditTaskShow}
@@ -53,6 +52,32 @@ function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}
                       getTasks={getTasks}/>
         </Container>
     );
+}
+
+function RenderTasks({tasks, isImportant, isUrgent, handleEditTask}){
+    if (tasks === undefined){
+        return(
+            <>
+                Error unable to get Tasks...
+            </>
+        )
+    }
+    if (tasks.length >= 0){
+        return(
+            <>
+                {tasks.map(task => (
+                        (task.isImportant === isImportant && task.isUrgent === isUrgent) &&
+                        <Col md={6} key={task._id} onClick={(e) => handleEditTask(e, task)}>
+                            <Task task={task}/>
+                        </Col>
+                    )
+                )}
+            </>
+        )
+    }
+    return(
+        <></>
+    )
 }
 
 export default SubBoard;

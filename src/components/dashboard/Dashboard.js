@@ -28,6 +28,7 @@ function Dashboard({auth, setAuth}) {
         isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
         getTasks()
         getDailies()
+
     }, [])
 
     async function getTasks() {
