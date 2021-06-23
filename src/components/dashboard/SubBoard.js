@@ -2,13 +2,13 @@ import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import Task from "./Task";
 
-function SubBoard({tasks, isImportant, isUrgent, color, title}) {
-
+function SubBoard({tasks, isImportant, isUrgent, color, title, border}) {
 
     const style = {
         ...color,
         height: "35vh",
-        boxShadow: "10px 10px 4px 0 rgba(0, 0, 0, 0.25)"
+        boxShadow: "10px 10px 4px 0 rgba(0, 0, 0, 0.25)",
+        ...border
     }
     const titleStyle = {
         backgroundColor: "rgba(65, 90, 95, 0.25)",

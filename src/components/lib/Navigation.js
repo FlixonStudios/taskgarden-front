@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navbar, Nav, Button, Container, Image, Row} from "react-bootstrap";
+import {Navbar, Nav, Button, Image} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import coinImg from "../../assets/img/pixel-art-bitcoin-gold-coin.png"
 
