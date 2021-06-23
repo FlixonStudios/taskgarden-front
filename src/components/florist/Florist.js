@@ -45,7 +45,7 @@ function Florist({setAuth}) {
                 </Col>
                 <Col md={7}>
                     <Row md={3} xs={1} className="g-4">
-                        {floristPlants.map(plant => (
+                        {floristPlants.length > 0 && floristPlants.map(plant => (
                             <Col>
                                 <Card key={plant._id} style={{width: "9rem"}} bg="warning">
                                     <Card.Img variant="top" src={plant.images[1]} style={{width: "110px", height: "110px"}}  />
