@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import coinImg from "../../assets/img/pixel-art-bitcoin-gold-coin.png"
 
 function Navigation({admin, logout, user}) {
+
     const logoutButtonStyle = {
         backgroundColor: "rgba(58, 70, 93, 1)",
         color: "white",

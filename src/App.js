@@ -10,6 +10,8 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Garden from "./components/garden/Garden";
 import Florist from "./components/florist/Florist";
 import AdminPage from "./components/admin/AdminPage";
+import {getUser} from "./lib/checks";
+
 
 function App() {
     const [auth, setAuth] = useState(false)
@@ -17,29 +19,17 @@ function App() {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        async function setUserStats() {
-            try {
-                let {data} = await axios.get("/api/user", {
-                    headers: {
-                        authorization: `Bearer ${localStorage.token}`
-                    }
-                })
+        //setAuth(isAuth())
+        //setUserStats(setAuth, setUser, setAdmin)
+        getUser().then(e => {
+            if (e.user) {
+                setAdmin(e.user.isAdmin)
                 setAuth(true)
-                if(data.user.isAdmin) setAdmin(true)
-                setUser(data.user)
-            } catch (e) {
-                setAdmin(false)
-                setAuth(false)
-                setUser(null)
-                await axios.delete("/api/logout", {
-                    headers: {
-                        authorization: `Bearer ${localStorage.token}`
-                    }
-                })
-                localStorage.removeItem("token")
+                setUser(e.user)
+            } else {
+                console.log(e.message)
             }
-        }
-        setUserStats()
+        })
     }, [auth])
 
     async function logout() {
@@ -66,9 +56,9 @@ function App() {
                     <Route path="/" exact>
                         {(!auth) ? <LandingPage setAuth={setAuth} setAdmin={setAdmin}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
                     </Route>
-                    <PrivateRouter auth={auth} admin={admin} user={user} path="/dashboard" Component={Dashboard} exact/>
-                    <PrivateRouter auth={auth} admin={admin} path="/garden" Component={Garden} exact/>
-                    <PrivateRouter auth={auth} admin={admin} path="/florist" Component={Florist} exact/>
+                    <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} user={user} path="/dashboard" Component={Dashboard} exact/>
+                    <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} path="/garden" Component={Garden} exact/>
+                    <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} path="/florist" Component={Florist} exact/>
                 </Switch>
             </BrowserRouter>
         </div>
@@ -80,7 +70,7 @@ function PrivateRouter({auth, admin, Component, path, location, ...rest}) {
         <>
             {(auth && !admin) ?
                     <Route path={path} exact>
-                        <Component {...rest}/>
+                        <Component auth={auth} {...rest}/>
                     </Route> :
                 <Redirect to={{pathname: "/", state: {from: location}}}/>
             }

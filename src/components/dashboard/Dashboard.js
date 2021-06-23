@@ -4,10 +4,11 @@ import AddTask from "./AddTask";
 import axios from "axios";
 import {useSelector, useDispatch} from "react-redux";
 import {setTaskList} from "../../store/actions/task.action";
+import {isAuth} from "../../lib/checks";
 import Taskboard from "./Taskboard";
 import DailiesBar from "./DailiesBar";
 
-function Dashboard(props) {
+function Dashboard({auth, setAuth}) {
     // Add Task Modal
     const [addTaskShow, setAddTaskShow] = useState(false); // Modal appearance state
     const handleShow = () => setAddTaskShow(true); // Function to show Modal
@@ -22,6 +23,11 @@ function Dashboard(props) {
     let tasks = useSelector(state => state.tasks)
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
+        getTasks()
+    }, [])
+
     async function getTasks() {
         try {
             let {data} = await axios.get("/api/tasks", {
@@ -35,10 +41,6 @@ function Dashboard(props) {
         }
     }
 
-    useEffect(() => {
-        getTasks()
-    })
-
     return (
         <>
             <DailiesBar />
@@ -49,7 +51,6 @@ function Dashboard(props) {
             <Container>
                 <Taskboard tasks={tasks}/>
             </Container>
-
         </>
     );
 }
