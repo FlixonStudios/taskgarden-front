@@ -54,8 +54,9 @@ function TaskView({clickedTask, setClickedTask, editTaskShow, setEditTaskShow, g
 
     // Save Changes
     async function saveForm() {
+
         try {
-          await axios.post(`/api/tasks/edit/${clickedTask._id}`, clickedTask, {
+          await axios.post(`/api/tasks/edit/${clickedTask._id}`, {...clickedTask, dateStart: startDate, dateBy: endDate} , {
               headers: {
                   authorization: `Bearer ${localStorage.token}`
               }
