@@ -1,7 +1,23 @@
-import React from 'react';
-import {Accordion, Card, Col, Container, Button, Row} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
+import {Accordion, Card, Col, Container, Button, Row, Image} from "react-bootstrap";
+import axios from "axios";
 
-function Garden({user}) {
+function Garden(props) {
+    const [inventory, setInventory] = useState([])
+
+    useEffect(() => {
+        async function getInventory() {
+            let {data: {plants}} = await axios.get("/api/garden/", {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
+            console.log(plants)
+            setInventory(plants)
+        }
+        getInventory()
+    },[])
+
     return (
         <Container className="my-5">
             <Row>
@@ -15,14 +31,12 @@ function Garden({user}) {
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
                     <Card.Body>
-                        {user.plants.map(id => (
-                        <Container key={id} style={{backgroundColor: "green"}} className="p-5 my-4">
-                            {id}
+                        {inventory.length > 0 && inventory.map(el => (
+                        <Container key={el._id} className="my-4">
+                            <Image src={el.images[el.currentLevel - 1]} alt={el.name} fluid />
+                            {el.name}
                         </Container>
                         ))}
-                        <Container style={{backgroundColor: "green"}} className="p-5 my-4">
-
-                        </Container>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>
