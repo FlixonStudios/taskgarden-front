@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {updateCoins} from "./store/actions/task.action";
 // Components
 import LandingPage from "./components/landing/LandingPage";
 import Navigation from "./components/lib/Navigation";
@@ -13,10 +15,14 @@ import AdminPage from "./components/admin/AdminPage";
 import {getUser} from "./lib/checks";
 
 
+
 function App() {
     const [auth, setAuth] = useState(false)
     const [admin, setAdmin] = useState(false)
     const [user, setUser] = useState(null)
+
+    let coins = useSelector(state => state.coins)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         //setAuth(isAuth())
@@ -26,6 +32,7 @@ function App() {
                 setAdmin(e.user.isAdmin)
                 setAuth(true)
                 setUser(e.user)
+                dispatch(updateCoins(e.user.coins))
             } else {
                 console.log(e.message)
             }
@@ -51,7 +58,7 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                {auth && <Navigation user={user} admin={admin} logout={logout}/>}
+                {auth && <Navigation user={user} admin={admin} coins={coins} logout={logout}/>}
                 <Switch>
                     <Route path="/" exact>
                         {(!auth) ? <LandingPage setAuth={setAuth} setAdmin={setAdmin}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
