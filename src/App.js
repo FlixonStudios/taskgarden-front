@@ -25,8 +25,6 @@ function App() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        //setAuth(isAuth())
-        //setUserStats(setAuth, setUser, setAdmin)
         getUser().then(e => {
             if (e.user) {
                 setAdmin(e.user.isAdmin)

@@ -2,6 +2,7 @@
 let initialState = {
     tasks: [],
     task: {},
+    dailies: [],
     coins: Number
 }
 
@@ -29,7 +30,21 @@ export function taskReducer(state=initialState, action){
             return {
                 ...state, coins: action.payload
             }
+        case "SET_DAILIES":
+            return{
+                ...state, dailies: action.payload
+            }
+        case "ARCHIVE_DAILY":
+            let dailiesArr = state.dailies
+            let index = dailiesArr.findIndex(el => el._id === action.payload)
+            dailiesArr[index] = !dailiesArr[index]
+            console.log("daily arr hit")
+            console.log(dailiesArr)
+            return{
+                ...state, dailies: dailiesArr
+            }
         default:
             return state
     }
 }
+
