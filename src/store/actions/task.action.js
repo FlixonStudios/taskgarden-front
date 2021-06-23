@@ -20,6 +20,20 @@ export function removeTask(id){
     }
 }
 
+export function setDailies(dailies){
+    return{
+        type: "SET_DAILIES",
+        payload: dailies
+    }
+}
+
+export function archiveDaily(id){
+    return{
+        type: "ARCHIVE_DAILY",
+        payload: id
+    }
+}
+
 export function updateCoins(coins){
     return{
         type: "UPDATE_COINS",
