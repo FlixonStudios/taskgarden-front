@@ -64,18 +64,6 @@ function Taskboard({tasks}) {
                 </Col>
 
             </Row>
-
-            {/*{*/}
-            {/*    [{},{},{},{}].map((el, i)=>(*/}
-            {/*        <Row>*/}
-            {/*            <SubBoard tasks={tasks}*/}
-            {/*                      isImportant={importantUrgentMatrix.isImportant[i]}*/}
-            {/*                      isUrgent={importantUrgentMatrix.isUrgent[i]}*/}
-            {/*                      color={colorMatrix.color[i]}/>    */}
-            {/*        </Row>*/}
-            {/*        */}
-            {/*    ))*/}
-            {/*}*/}
         </div>
     );
 }

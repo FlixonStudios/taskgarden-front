@@ -12,3 +12,19 @@ export function removeTask(id){
         payload: id
     }
 }
+
+export function setDailies(dailies){
+    return{
+        type: "SET_DAILIES",
+        payload: dailies
+    }
+}
+
+export function archiveDaily(id){
+    return{
+        type: "ARCHIVE_DAILY",
+        payload: id
+    }
+}
+
+
