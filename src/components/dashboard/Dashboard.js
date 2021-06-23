@@ -11,7 +11,6 @@ import DailiesBar from "./DailiesBar";
 function Dashboard({auth, setAuth}) {
     // Add Task Modal
     const [addTaskShow, setAddTaskShow] = useState(false); // Modal appearance state
-    const [daily, setDaily] = useState({mes: "Description"})
     const handleShow = () => setAddTaskShow(true); // Function to show Modal
     const addTaskButtonStyle = {
         width: "50px",

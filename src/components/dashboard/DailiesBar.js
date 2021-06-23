@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
-import {archiveDaily} from "../../store/actions/task.action";
 
 function DailiesBar({daily}) {
     let [buttonState, setButtonState] = useState(false)
