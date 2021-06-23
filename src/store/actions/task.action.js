@@ -19,3 +19,10 @@ export function removeTask(id){
         payload: id
     }
 }
+
+export function updateCoins(coins){
+    return{
+        type: "UPDATE_COINS",
+        payload: coins
+    }
+}

@@ -3,7 +3,7 @@ import {Navbar, Nav, Button, Image} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import coinImg from "../../assets/img/pixel-art-bitcoin-gold-coin.png"
 
-function Navigation({admin, logout, user}) {
+function Navigation({admin, logout, user, coins}) {
 
     const logoutButtonStyle = {
         backgroundColor: "rgba(58, 70, 93, 1)",
@@ -25,7 +25,7 @@ function Navigation({admin, logout, user}) {
                         <>
                             <Nav.Item className="nav-link text-white">
                             <Image style={{width: "25px", height: "25px"}} src={coinImg} className="mr-1" />
-                            {user ? user.coins : 0}
+                            {user ? coins : 0}
                             </Nav.Item>
                             <NavLink to="/dashboard" className="nav-link text-white">Dashboard</NavLink>
                             <NavLink to="/garden" className="nav-link text-white">Garden</NavLink>

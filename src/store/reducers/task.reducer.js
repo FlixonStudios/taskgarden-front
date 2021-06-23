@@ -1,7 +1,8 @@
 
 let initialState = {
     tasks: [],
-    task: {}
+    task: {},
+    coins: Number
 }
 
 export function taskReducer(state=initialState, action){
@@ -23,6 +24,10 @@ export function taskReducer(state=initialState, action){
             let afterDeleteLIst = taskList.filter(el => el._id !== action.payload)
             return {
                 ...state, tasks: afterDeleteLIst
+            }
+        case "UPDATE_COINS":
+            return {
+                ...state, coins: action.payload
             }
         default:
             return state
