@@ -18,6 +18,7 @@ function Florist({user, auth, setAuth, admin}) {
         getFloristPlants()
     },[])
 
+    //to get the plants from DB for the shop
     async function getFloristPlants(){
         try{
             let floristPlants = await axios.get('/api/florist', {
@@ -30,18 +31,19 @@ function Florist({user, auth, setAuth, admin}) {
         }
     }
 
+    //when buy button is clicked
     async function buyPlant(e){
         try{
             //finding the array of the plant clicked
-            let price = floristPlants.find(({_id}) => _id == e.target.value)
-            if(price.price > user.coins){
+            let plant = floristPlants.find(({_id}) => _id == e.target.value)
+            //check if user have enough coins
+            if(plant.price > user.coins){
                 return setShowInsufficientCoin(true)
             }
-            // await axios.get('api/',{
-            //     headers: {
-            //         authorization: `Bearer ${localStorage.token}`
-            //     }})
-            console.log('this works')
+            await axios.post('/api/florist/buy',{user,plant},{
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }})
 
         }catch(e){
             console.log(e)
