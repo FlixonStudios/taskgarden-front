@@ -19,33 +19,27 @@ function DailiesBar({daily}) {
         boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.25)"
     }
     let notDoneBtnStyle = {
-        border: "3px solid rgba(50, 136, 29, 1)",
-        backgroundColor: "rgb(201,47,47)",
+        border: "3px solid rgba(68,9,9, 1)",
+        backgroundColor: "rgb(208,30,30)",
         borderRadius: "10px",
         boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.25)"
     }
-    let dailies = useSelector(state => state.dailies)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         setButtonState(daily["isArchived"])
     },[])
 
     async function changeStateOfDaily() {
-        console.log(dailies)
         let state = await axios.post(`/api/tasks/dailies/${daily._id}`, daily, {
             headers: {
                 authorization: `Bearer ${localStorage.token}`
             }
         })
         setButtonState(state.data.isArchived)
-        //dispatch(archiveDaily(daily._id))
     }
 
     function RenderButton(){
-        let index = dailies.findIndex(el => el.id === daily._id)
-        let temp = dailies[index]
-        //console.log(temp)
+
         if(buttonState){
             return(
                 <Button onClick={changeStateOfDaily} style={doneBtnStyle}>
