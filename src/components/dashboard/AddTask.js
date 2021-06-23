@@ -46,6 +46,7 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
         } catch (e) {
             console.log(e)
         }
+        setNewTaskForm(prevState => ({...prevState, isImportant: false, isUrgent: false}))
     }
 
     return (
