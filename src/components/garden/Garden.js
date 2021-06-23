@@ -4,6 +4,8 @@ import axios from "axios";
 
 function Garden(props) {
     const [inventory, setInventory] = useState([])
+    const [selected, setSelected] = useState("")
+
 
     useEffect(() => {
         async function getInventory() {
@@ -17,6 +19,11 @@ function Garden(props) {
         }
         getInventory()
     },[])
+
+    function selectPlants(id) {
+        setSelected("")
+        if(selected !== id) setSelected(id)
+    }
 
     return (
         <Container className="my-5">
@@ -32,8 +39,12 @@ function Garden(props) {
                 <Accordion.Collapse eventKey="0">
                     <Card.Body>
                         {inventory.length > 0 && inventory.map(el => (
-                        <Container key={el._id} className="my-4">
-                            <Image src={el.images[el.currentLevel - 1]} alt={el.name} fluid />
+                        <Container key={el._id}
+                                   className="my-4"
+                                   style={{
+                                       border: `3px solid ${(selected === el._id) ? 'yellow' : "white"}`
+                                   }}>
+                            <Image src={el.images[el.currentLevel - 1]} alt={el.name} fluid onClick={() => selectPlants(el._id)} />
                             {el.name}
                         </Container>
                         ))}
