@@ -2,7 +2,7 @@ import React from 'react';
 import SubBoard from "./SubBoard";
 import {Col, Row} from "react-bootstrap";
 
-function Taskboard({tasks}) {
+function Taskboard({tasks, getTasks}) {
 
     const titleArray = ["Do", "Decide", "Delegate", "Drop"]
     const subBoardBorder = [
@@ -29,6 +29,7 @@ function Taskboard({tasks}) {
             <Row>
                 <Col md={6} className={`px-0`}>
                     <SubBoard tasks={tasks}
+                              getTasks={getTasks}
                               isImportant={importantUrgentMatrix.isImportant[0]}
                               isUrgent={importantUrgentMatrix.isUrgent[0]}
                               color={colorMatrix.color[0]}
@@ -37,6 +38,7 @@ function Taskboard({tasks}) {
                 </Col>
                 <Col md={6} className={`px-0`}>
                     <SubBoard tasks={tasks}
+                              getTasks={getTasks}
                               isImportant={importantUrgentMatrix.isImportant[1]}
                               isUrgent={importantUrgentMatrix.isUrgent[1]}
                               color={colorMatrix.color[1]}
@@ -48,6 +50,7 @@ function Taskboard({tasks}) {
             <Row>
                 <Col md={6} className={`px-0`}>
                     <SubBoard tasks={tasks}
+                              getTasks={getTasks}
                               isImportant={importantUrgentMatrix.isImportant[2]}
                               isUrgent={importantUrgentMatrix.isUrgent[2]}
                               color={colorMatrix.color[2]}
@@ -56,6 +59,7 @@ function Taskboard({tasks}) {
                 </Col>
                 <Col md={6} className={`px-0`}>
                     <SubBoard tasks={tasks}
+                              getTasks={getTasks}
                               isImportant={importantUrgentMatrix.isImportant[3]}
                               isUrgent={importantUrgentMatrix.isUrgent[3]}
                               color={colorMatrix.color[3]}

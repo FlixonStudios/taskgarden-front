@@ -6,6 +6,13 @@ export function setTaskList(tasks){
     }
 }
 
+export function editTask(id) {
+    return {
+        type: "GET_TASK",
+        payload: id
+    }
+}
+
 export function removeTask(id){
     return{
         type: "DELETE_TASK",
@@ -27,4 +34,9 @@ export function archiveDaily(id){
     }
 }
 
-
+export function updateCoins(coins){
+    return{
+        type: "UPDATE_COINS",
+        payload: coins
+    }
+}

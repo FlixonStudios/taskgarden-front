@@ -4,20 +4,25 @@ import {Col, Image, Card, Container, Row, Button, Modal} from "react-bootstrap";
 import axios from "axios";
 import {isAuth} from "../../lib/checks";
 import coinImg from "../../assets/img/pixel-art-bitcoin-gold-coin.png"
+import {useDispatch} from "react-redux";
+import {updateCoins} from "../../store/actions/task.action";
 
 
-function Florist({user, auth, setAuth, admin}) {
+function Florist({user, auth, setAuth, admin, coins}) {
 
     const [floristPlants, setFloristPlants] = useState([])
     const [showInsufficientCoin, setShowInsufficientCoin] = useState(false);
 
     const handleClose = () => setShowInsufficientCoin(false);
 
+    const dispatch = useDispatch()
+
     useEffect(()=>{
         isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
         getFloristPlants()
     },[])
 
+    //to get the plants from DB for the shop
     async function getFloristPlants(){
         try{
             let floristPlants = await axios.get('/api/florist', {
@@ -30,21 +35,28 @@ function Florist({user, auth, setAuth, admin}) {
         }
     }
 
+    //when buy button is clicked
     async function buyPlant(e){
         try{
             //finding the array of the plant clicked
-            let price = floristPlants.find(({_id}) => _id == e.target.value)
-            if(price.price > user.coins){
+            let plant = floristPlants.find(({_id}) => _id == e.target.value)
+
+            //check if user have enough coins
+            if(plant.price > coins){
                 return setShowInsufficientCoin(true)
             }
-            // await axios.get('api/',{
-            //     headers: {
-            //         authorization: `Bearer ${localStorage.token}`
-            //     }})
-            console.log('this works')
+
+            //send user, coins and plant to backend and get back a response of updated coins
+            let newCoinsValue = await axios.post('/api/florist/buy',{user,coins,plant},{
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }})
+
+            //updates the store
+            dispatch(updateCoins(newCoinsValue.data.newCoins))
 
         }catch(e){
-            console.log(e)
+            console.log(e.response)
         }
     }
 
