@@ -119,7 +119,7 @@ function AdminPage(props) {
                             <Button onClick={uploadImage}>Upload</Button>
                         </Form.Group>
                         <div>
-                            <img src={url}/>
+                            <img src={url} alt="upload"/>
                         </div>
                         <Button onClick={submitFlorist}>Submit</Button>
                     </Form>
