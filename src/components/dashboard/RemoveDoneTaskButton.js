@@ -2,6 +2,7 @@ import React from 'react';
 import {Button} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
+import {archiveTask} from "../../store/actions/task.action";
 
 function RemoveDoneTaskButton({getTasks}) {
     let tasks = useSelector(state => state.tasks)
@@ -17,7 +18,8 @@ function RemoveDoneTaskButton({getTasks}) {
             })
 
             for(let i = 0; i < tasksToArchive.length; i++){
-                await setTaskIsArchived(tasksToArchive[i]._id)
+                let taskId = await setTaskIsArchived(tasksToArchive[i]._id)
+                dispatch(archiveTask(taskId))
             }
         }catch(e){
             console.log(e)
@@ -32,6 +34,7 @@ function RemoveDoneTaskButton({getTasks}) {
                 }
             })
             console.log(task.data)
+            return task.data.payload._id.toString()
         }catch(e){
             console.log(e)
         }

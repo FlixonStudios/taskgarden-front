@@ -6,9 +6,9 @@ export function setTaskList(tasks){
     }
 }
 
-export function editTask(id) {
+export function archiveTask(id) {
     return {
-        type: "GET_TASK",
+        type: "ARCHIVE_TASK",
         payload: id
     }
 }
@@ -24,13 +24,6 @@ export function setDailies(dailies){
     return{
         type: "SET_DAILIES",
         payload: dailies
-    }
-}
-
-export function archiveDaily(id){
-    return{
-        type: "ARCHIVE_DAILY",
-        payload: id
     }
 }
 

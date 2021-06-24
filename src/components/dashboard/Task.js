@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Form, Toast} from "react-bootstrap";
-import {useDispatch} from "react-redux";
+import {Button, Form, Toast} from "react-bootstrap";
+import {useDispatch, useSelector} from "react-redux";
 import {removeTask} from "../../store/actions/task.action";
 import axios from "axios";
 
@@ -8,10 +8,20 @@ import axios from "axios";
 function Task({task, handleEditTask}) {
     const [showTask, setShowTask] = useState(true)
     const [done, setDone] = useState(false)
+
     const dispatch = useDispatch()
 
     const strikethrough = {
         textDecoration: "line-through"
+    }
+
+    let deleteBtnStyle = {
+        border: "rgba(68,9,9, 1)",
+        backgroundColor: "rgb(208,30,30)",
+        borderRadius: "10px",
+        boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.25)",
+        height: "20px",
+        width: "20px",
     }
 
     useEffect(()=>{
@@ -20,7 +30,6 @@ function Task({task, handleEditTask}) {
         }else{
             setDone(false)
         }
-        console.log(task)
     },[])
 
     function deleteTask(e){
@@ -38,6 +47,11 @@ function Task({task, handleEditTask}) {
     function removeTaskFromScreen() {
         setShowTask(false)
         dispatch(removeTask(task._id))
+    }
+
+    function closeToast(e){
+        e.stopPropagation()
+        removeTaskFromScreen();
     }
 
     function handleDone(e){
@@ -64,14 +78,18 @@ function Task({task, handleEditTask}) {
     }
 
     return (
-            <Toast show={showTask} onClose={deleteTask} >
-                <Toast.Header >
+            <Toast show={showTask} onClose={closeToast} >
+                <Toast.Header closeButton={false}>
                     <strong style={done?{textDecoration: "line-through"}:{textDecoration: "none"}}
                             onClick={e=>handleEditTask(e,task)}
                             className={`mr-auto`}>
                         {task.name}
                     </strong>
-                    <Form.Check type={"checkbox"} onChange={handleDone} checked={done}/>
+                    <Form.Check className={"mr-1"} type={"checkbox"} onChange={handleDone} checked={done}/>
+                    <Button variant={"danger"} size={"sm"} style={deleteBtnStyle} onClick={deleteTask}
+                            className={"d-flex align-items-center justify-content-center"}>
+                        X
+                    </Button>
                 </Toast.Header>
 
                 {/*<Toast.Body>{task.category}</Toast.Body>*/}
