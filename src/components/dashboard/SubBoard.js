@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import Task from "./Task";
 import TaskView from "./TaskView";
+import {useDispatch, useSelector} from "react-redux";
 
-function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}) {
+function SubBoard({getTasks, isImportant, isUrgent, color, title, border}) {
     // CSS
     const style = {
         ...color,
@@ -24,11 +25,13 @@ function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}
     // Clicked task state
     const [clickedTask, setClickedTask] = useState({})
 
+    let tasks = useSelector(state => state.tasks)
+
+
     function handleEditTask(e, task) {
         setEditTaskShow(true)
         setClickedTask(task)
     }
-
     return (
         <Container style={style}>
             <Row className="mx-auto" style={{height: "15%"}}>
@@ -49,8 +52,15 @@ function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}
     );
 }
 
-function RenderTasks({tasks, isImportant, isUrgent, handleEditTask}){
+function RenderTasks({isImportant, isUrgent, handleEditTask}){
     //onClick={(e) => handleEditTask(e, task)}
+
+    let tasks = useSelector(state => state.tasks)
+
+    useEffect(()=>{
+
+    },[tasks])
+
     if (tasks === undefined){
         return(
             <>
@@ -58,15 +68,18 @@ function RenderTasks({tasks, isImportant, isUrgent, handleEditTask}){
             </>
         )
     }
+
     if (tasks.length >= 0){
         return(
             <>
-                {tasks.map(task => (
-                        (task.isImportant === isImportant && task.isUrgent === isUrgent) &&
-                        <Col lg={6} md={12} key={task._id} >
-                            <Task task={task} handleEditTask={handleEditTask}/>
-                        </Col>
-                    )
+                {tasks.map(task => {
+                    return (
+                            ((task.isImportant === isImportant) && (task.isUrgent === isUrgent) && (task.isArchived === false)) &&
+                            <Col lg={6} md={12} key={task._id}>
+                                <Task task={task} handleEditTask={handleEditTask}/>
+                            </Col>
+                        )
+                    }
                 )}
             </>
         )

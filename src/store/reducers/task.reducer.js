@@ -15,10 +15,13 @@ export function taskReducer(state=initialState, action){
                 ...state, tasks: action.payload
             }
 
-        case "GET_TASK":
-            let task = taskList.find(el => el._id === action.payload)
+        case "ARCHIVE_TASK":
+            let index = taskList.findIndex(el => el._id.toString() === action.payload)
+
+            taskList[index].isArchived = true
+
             return {
-                ...state, tasks: task
+                ...state, tasks: taskList
             }
 
         case "DELETE_TASK":
@@ -34,15 +37,7 @@ export function taskReducer(state=initialState, action){
             return{
                 ...state, dailies: action.payload
             }
-        case "ARCHIVE_DAILY":
-            let dailiesArr = state.dailies
-            let index = dailiesArr.findIndex(el => el._id === action.payload)
-            dailiesArr[index] = !dailiesArr[index]
-            console.log("daily arr hit")
-            console.log(dailiesArr)
-            return{
-                ...state, dailies: dailiesArr
-            }
+
         default:
             return state
     }

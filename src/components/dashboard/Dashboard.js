@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import AddTask from "./AddTask";
 import axios from "axios";
 import {useSelector, useDispatch} from "react-redux";
@@ -7,6 +7,7 @@ import {setTaskList, setDailies} from "../../store/actions/task.action";
 import {isAuth} from "../../lib/checks";
 import Taskboard from "./Taskboard";
 import DailiesBar from "./DailiesBar";
+import RemoveDoneTaskButton from "./RemoveDoneTaskButton";
 
 function Dashboard({auth, setAuth}) {
     // Add Task Modal
@@ -38,8 +39,8 @@ function Dashboard({auth, setAuth}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-            console.log(data.tasks)
             dispatch(setTaskList(data.tasks))
+            return data.tasks
         } catch (e) {
             console.log(e)
         }
@@ -66,10 +67,15 @@ function Dashboard({auth, setAuth}) {
                     <DailiesBar daily={el} key={idx} />
                 )) : <div>Loading...</div>
             }
-
-            <Container className="mr-3 my-2" style={addTaskButtonStyle} onClick={handleShow}>
-                +
+            <Container>
+                <Row className={'d-flex justify-content-between align-items-center'}>
+                    <RemoveDoneTaskButton tasks={tasks} getTasks={getTasks}/>
+                    <Container className="mr-3 my-2" style={addTaskButtonStyle} onClick={handleShow}>
+                        +
+                    </Container>
+                </Row>
             </Container>
+
             <AddTask addTaskShow={addTaskShow} setAddTaskShow={setAddTaskShow} getTasks={getTasks} />
             <Container>
                 <Taskboard tasks={tasks} getTasks={getTasks}/>
