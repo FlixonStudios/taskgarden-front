@@ -39,8 +39,8 @@ function Dashboard({auth, setAuth}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-            console.log(data.tasks)
             dispatch(setTaskList(data.tasks))
+            return data.tasks
         } catch (e) {
             console.log(e)
         }
@@ -69,7 +69,7 @@ function Dashboard({auth, setAuth}) {
             }
             <Container>
                 <Row className={'d-flex justify-content-between align-items-center'}>
-                    <RemoveDoneTaskButton />
+                    <RemoveDoneTaskButton tasks={tasks} getTasks={getTasks}/>
                     <Container className="mr-3 my-2" style={addTaskButtonStyle} onClick={handleShow}>
                         +
                     </Container>
