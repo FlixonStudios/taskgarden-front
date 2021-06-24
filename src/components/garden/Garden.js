@@ -114,7 +114,7 @@ function Garden(props) {
                                         <OverlayTrigger overlay={
                                             <Tooltip>
                                                 {garden[i].name}
-                                                <ProgressBar now={garden[i].currentGrowth} label={`${garden[i].currentGrowth/garden[i].maxGrowth*100}%`} max={garden[i].maxGrowth} />
+                                                <ProgressBar now={garden[i].currentGrowth} label={`${Math.round(garden[i].currentGrowth/garden[i].maxGrowth*100)}%`} max={garden[i].maxGrowth} />
                                             </Tooltip>
                                         } placement={'top'}>
                                             <Image src={garden[i].images[garden[i].currentLevel - 1]} alt={garden[i].name} fluid/>
