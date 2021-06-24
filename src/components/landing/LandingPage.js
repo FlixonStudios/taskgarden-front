@@ -23,16 +23,12 @@ function LandingPage({auth, setAuth, setAdmin, setUser}) {
     }
 
     const loginStyle = {
-//81, 163, 136,  54, 150, 148,
         backgroundColor: "rgba(81, 163, 136,0.7)",
         top: "30%",
         borderRadius: "25px",
         border: "solid rgba(24,71,57, 1)"
     }
 
-    const headerStyle={
-
-    }
 
     return (
         <div>
@@ -51,7 +47,6 @@ function LandingPage({auth, setAuth, setAdmin, setUser}) {
                     <Row className={"d-flex justify-content-center"}>
                         <Col lg={6} >
                         <Container style={loginStyle} className={"p-3"}>
-
                                 <Row className={"justify-content-center mb-3"}>
                                     Have an Account? Sign in!
                                 </Row>
@@ -69,9 +64,6 @@ function LandingPage({auth, setAuth, setAdmin, setUser}) {
                                         Register
                                     </Button>
                                 </Row>
-
-
-
                         </Container>
                         </Col>
                     </Row>
