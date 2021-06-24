@@ -124,14 +124,8 @@ function TaskView({clickedTask, setClickedTask, editTaskShow, setEditTaskShow, g
                             <Form.Control name="description" as="textarea" rows={3} placeholder="Enter a description" value={clickedTask.description} onChange={handleChange}/>
                         </Form.Group>
 
-                        <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Label>Select Plant</Form.Label>
-                            <Form.Control as="select" onChange={handleChange}>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </Form.Control>
+                        <Form.Group>
+                            <Form.Label htmlFor="disabledSelect">Selected Plant: {clickedTask.plantAssigned && clickedTask.plantAssigned.name}</Form.Label>
                         </Form.Group>
 
                         <Container>
