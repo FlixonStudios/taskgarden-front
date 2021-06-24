@@ -20,7 +20,6 @@ function Task({task, handleEditTask}) {
         }else{
             setDone(false)
         }
-        console.log(task)
     },[])
 
     function deleteTask(e){

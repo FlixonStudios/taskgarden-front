@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Modal, Form, Row, Container, Col} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,10 +6,24 @@ import axios from "axios";
 
 function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
+    const [assignablePlants, setAssignablePlants] = useState([])
+    const [selectedPlant, setSelectedPlant] = useState({})
     // Datepicker
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [selected, setSelected] = useState({IU: "none", IN: "none", UU: "none", UN: "none"})
+
+    useEffect(() => {
+        async function getAssignablePlants() {
+            let {data: {assignablePlants}} = await axios.get("/api/tasks/assignable", {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
+            setAssignablePlants(assignablePlants)
+        }
+        getAssignablePlants()
+    },[])
 
     // Add Task Modal
     function handleClose() { // Function to close Modal
@@ -22,6 +36,7 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
         setNewTaskForm(prevState => ({...prevState, [e.target.name] : e.target.value }))
     }
 
+    // Handles Matrix selector click
     function handleQuadrantClick(e, value) {
         if(selected[e.target.attributes.name.value] === "none") {
             setSelected({IU: "none", IN: "none", UU: "none", UN: "none"})
@@ -36,7 +51,7 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
 
     async function submit() {
         try {
-            await axios.post("/api/tasks/create", {...newTaskForm, dateStart: startDate, dateBy: endDate}, {
+            await axios.post("/api/tasks/create", {...newTaskForm, dateStart: startDate, dateBy: endDate, plantAssigned: selectedPlant}, {
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
                 }
@@ -104,11 +119,10 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Select Plant</Form.Label>
-                        <Form.Control as="select" onChange={handleChange}>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <Form.Control as="select" onChange={(e) => setSelectedPlant(e.target.value)}>
+                            {assignablePlants.length > 0 && assignablePlants.map((el, i) => {
+                                return <option key={i} value={el._id}>{el.name}</option>
+                            })}
                         </Form.Control>
                     </Form.Group>
 
