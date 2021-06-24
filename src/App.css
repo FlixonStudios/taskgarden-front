@@ -75,7 +75,7 @@ body {
 }
 
 .btn-change6{
-  background-color: rgba(255, 249, 235,1) !important;
+  background-color: rgba(234,228,214, 1) !important;
   box-shadow: 0 0 1px #ccc;
   border: 0px;
   -webkit-transition-duration: 0.2s;
@@ -83,6 +83,6 @@ body {
   box-shadow:0px 0 0 #a09a8b inset;
 }
 .btn-change6:hover{
-  box-shadow:0 0 0 50px #FFF9EB  inset;
+  box-shadow:0 0 0 50px #EAE4D6  inset;
   -webkit-transform: scale(1);
 }

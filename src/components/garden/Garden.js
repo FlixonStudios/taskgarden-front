@@ -28,7 +28,7 @@ function Garden(props) {
         backgroundColor: "rgba(255, 249, 235,0.7)" ,
     }
     const headerStyle = {
-        backgroundColor: "rgba(255, 249, 235,1)",
+        backgroundColor: "rgba(234,228,214, 1)",
         border: 0,
         fontSize: "25pt",
     }
@@ -40,6 +40,16 @@ function Garden(props) {
     }
     const deselectedStyle = {
         backgroundColor: "rgba(255, 249, 235,1)",
+    }
+    const gardenStyle = {
+        height: "89vh",
+        backgroundColor: "green"
+    }
+    const plantStyle = {
+        backgroundColor: "rgb(255, 255, 255, 0.3)",
+        borderRadius: "10px",
+        height: "100%",
+        width: "100%"
     }
 
     useEffect(() => {
@@ -117,18 +127,13 @@ function Garden(props) {
         </Accordion>
                 </Col>
                 <Col md={9}>
-                    <Container style={{height: "90vh", backgroundColor: "green"}}>
+                    <Container style={gardenStyle}>
                         <Row style={{height: "100%"}}>
                             {plantSlots.map((el,i) =>
                             <Col key={i} md={4} className="my-3">
-                                <Container style={{
-                                    backgroundColor: "rgb(255, 255, 255, 0.3)",
-                                    borderRadius: "10px",
-                                    height: "100%",
-                                    width: "100%"
-                                }}
-                                           onClick={() => insertPlant(i)}>
-                                    {((garden) && (garden.length > 0) && (garden[i] != null) )&&
+                                <Container style={plantStyle} onClick={() => insertPlant(i)}>
+                                    {
+                                        ((garden) && (garden.length > 0) && (garden[i] != null) )&&
                                         <OverlayTrigger overlay={
                                             <Tooltip>
                                                 {garden[i].name}
@@ -137,7 +142,6 @@ function Garden(props) {
                                         } placement={'top'}>
                                             <Image src={garden[i].images[garden[i].currentLevel - 1]} alt={garden[i].name} fluid/>
                                         </OverlayTrigger>
-
                                     }
                                 </Container>
                             </Col>
