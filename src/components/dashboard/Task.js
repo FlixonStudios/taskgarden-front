@@ -65,7 +65,6 @@ function Task({task, handleEditTask}) {
 
     return (
             <Toast show={showTask} onClose={deleteTask} >
-
                 <Toast.Header >
                     <strong style={done?{textDecoration: "line-through"}:{textDecoration: "none"}}
                             onClick={e=>handleEditTask(e,task)}

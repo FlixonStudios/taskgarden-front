@@ -22,8 +22,8 @@ function RemoveDoneTaskButton({getTasks}) {
         }catch(e){
             console.log(e)
         }
-
     }
+
     async function setTaskIsArchived(id){
         try{
             let task = await axios.post(`/api/tasks/edit/${id}`, {isArchived: true} ,{
