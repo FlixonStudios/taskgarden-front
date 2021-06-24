@@ -13,19 +13,18 @@ function LandingPage({auth, setAuth, setAdmin, setUser}) {
     const bgImgStyle = {
 
         height: "100vh",
+        width: "100%",
         position: "absolute",
         objectFit: "cover",
+        objectPosition: "center",
         top: "56px",
-        left: 0,
+        left: "0",
         zIndex: -1
     }
 
     const loginStyle = {
-        position: "sticky",
-        top: "50%",
-        left: "60%",
-        width: "400px",
-        backgroundColor: "rgba(54, 150, 148,1)"
+//81, 163, 136,  54, 150, 148,
+        backgroundColor: "rgba(81, 163, 136, 0.7)"
     }
 
     const headerStyle={
