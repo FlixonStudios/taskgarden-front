@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
-import {Toast} from "react-bootstrap";
+import {Form, Toast} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import {removeTask} from "../../store/actions/task.action";
 import axios from "axios";
 
-function Task({task}) {
+
+function Task({task, handleEditTask}) {
     const [showTask, setShowTask] = useState(true)
+    const [done, setDone] = useState(false)
     const dispatch = useDispatch()
+
+    const strikethrough = {
+        textDecoration: "line-through"
+    }
 
     function deleteTask(e){
         e.stopPropagation()
@@ -25,11 +31,28 @@ function Task({task}) {
         dispatch(removeTask(task._id))
     }
 
+    function handleDone(e){
+        setDone(!done)
+        console.log(done)
+        e.stopPropagation()
+    }
+
+    async function changeStatus(){
+        
+    }
+
     return (
-            <Toast show={showTask} onClose={deleteTask}>
-                <Toast.Header>
-                    <strong className="mr-auto">{task.name}</strong>
+            <Toast show={showTask} onClose={deleteTask} >
+
+                <Toast.Header >
+                    <strong style={done?{textDecoration: "line-through"}:{textDecoration: "none"}}
+                            onClick={e=>handleEditTask(e,task)}
+                            className={`mr-auto`}>
+                        {task.name}
+                    </strong>
+                    <Form.Check type={"checkbox"} onChange={handleDone}/>
                 </Toast.Header>
+
                 {/*<Toast.Body>{task.category}</Toast.Body>*/}
             </Toast>
     );

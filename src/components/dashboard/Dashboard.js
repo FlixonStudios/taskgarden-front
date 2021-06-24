@@ -38,6 +38,7 @@ function Dashboard({auth, setAuth}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
+            console.log(data.tasks)
             dispatch(setTaskList(data.tasks))
         } catch (e) {
             console.log(e)
