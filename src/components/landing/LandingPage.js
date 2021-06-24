@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Col, Image, Row} from "react-bootstrap";
+import {Button, Col, Container, Image, Row} from "react-bootstrap";
 import forestImg from "../../assets/img/nP5HPw4.jpeg"
 import Login from "./Login";
 import Register from "./Register";
@@ -10,51 +10,65 @@ function LandingPage({auth, setAuth, setAdmin, setUser}) {
     const handleLoginShow = () => setLoginShow(true);
     const handleRegisterShow = () => setRegisterShow(true);
 
+    const bgImgStyle = {
+
+        height: "100vh",
+        position: "absolute",
+        objectFit: "cover",
+        top: "56px",
+        left: 0,
+        zIndex: -1
+    }
+
+    const loginStyle = {
+        position: "sticky",
+        top: "50%",
+        left: "60%",
+        width: "400px",
+        backgroundColor: "rgba(54, 150, 148,1)"
+    }
+
+    const headerStyle={
+
+    }
+
     return (
-        <Row className="flex-grow-1">
-            <Col xs={12} md={7} className="bg-dark align-content-center">
-                <Row>
-                    <Row className="text-center">
-                        <Col className="text-white h1">Task Garden</Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Image src={forestImg} fluid id="landingForest"/>
+        <div>
+            <Image src={forestImg} style={bgImgStyle} fluid id="landingForest"/>
+            <Row className="flex-grow-1">
+                <Col className="bg-dark align-content-center">
+                    <Container>
+                        <Col className="text-white h1">
+                            Task Garden
                         </Col>
-                    </Row>
-                </Row>
-            </Col>
-            <Col xs={5} >
-                <Col>
-                    <Row >
-                        <Col >
-                            <Row className="justify-content-center">
-                                Have an Account? Sign in!
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Button variant="primary" className="landingButton" onClick={handleLoginShow}>
-                                    Sign in
-                                </Button>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Row className="justify-content-center">
-                                If not, register here!
-                            </Row>
-                            <Row className="justify-content-center">
-                                <Button variant="primary" className="landingButton" onClick={handleRegisterShow}>
-                                    Register
-                                </Button>
-                            </Row>
-                        </Col>
-                    </Row>
+                    </Container>
                 </Col>
-            </Col>
+            </Row>
+                <div style={{height: "100vh"}}>
+                    <Container style={loginStyle} className={"m-3"}>
+                        <Row className="justify-content-center">
+                            Have an Account? Sign in!
+                        </Row>
+                        <Row className="justify-content-center">
+                            <Button variant="primary" className="landingButton" onClick={handleLoginShow}>
+                                Sign in
+                            </Button>
+                        </Row>
+                        <Row className="justify-content-center">
+                            If not, register here!
+                        </Row>
+                        <Row className="justify-content-center">
+                            <Button variant="primary" className="landingButton" onClick={handleRegisterShow}>
+                                Register
+                            </Button>
+                        </Row>
+                    </Container>
+                </div>
+
             <Login show={loginShow} setShow={setLoginShow} setAuth={setAuth} setAdmin={setAdmin}/>
             <Register show={registerShow} setShow={setRegisterShow} setAuth={setAuth}/>
-        </Row>
+        </div>
+
     );
 }
 
