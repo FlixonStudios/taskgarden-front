@@ -20,7 +20,7 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-            setAssignablePlants(assignablePlants.plants && assignablePlants.plants)
+            setAssignablePlants(assignablePlants != null && assignablePlants.plants)
         }
         getAssignablePlants()
     },[])
