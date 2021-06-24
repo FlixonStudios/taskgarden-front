@@ -18,17 +18,23 @@ function Florist({user, auth, setAuth, admin, coins}) {
 
     const cardStyle = {
         backgroundColor: "rgba(255, 249, 235,1)",
-        width: "9rem",
+
+        borderRadius: "25px",
     }
     const plantStyle = {
         objectPosition: "center",
-        width: "110px",
-        height: "110px",
+        width: "100%",
+        maxWidth: "330px"
+        //height: "110px",
     }
     const buyBtnStyle = {
-        backgroundColor: "rgba(255, 249, 235, 0.2)",
         border: "0",
-        width: "80px",
+        width: "80%",
+    }
+    const floristStyle = {
+        height: "100vh",
+        objectPosition: "center",
+        objectFit: "cover",
     }
 
     useEffect(()=>{
@@ -75,50 +81,52 @@ function Florist({user, auth, setAuth, admin, coins}) {
     }
 
     return (
-        <Container>
+        <div>
             <Row>
-                <Col md={5}>
-                    <Image src={floristImg} fluid/>
+                <Col md={5} className={"p-0"}>
+                    <Image src={floristImg} style={floristStyle} fluid/>
                 </Col>
                 <Col md={7}>
-                    <Row md={3} xs={1} className="g-4">
+                    <Container >
+                        <Row className="g-4">
+                            {floristPlants.length > 0 && floristPlants.map(plant => (
+                                <Col lg={4} xs={12} key={plant._id} className={"d-flex justify-content-center"}>
+                                    <Card style={cardStyle} className={"mt-2 mb-2 p-2"}>
+                                        <Row className={"d-flex justify-content-center"}>
+                                            <Image src={plant.images[1]} style={plantStyle} />
+                                        </Row>
 
-                        {floristPlants.length > 0 && floristPlants.map(plant => (
-                            <Col key={plant._id} className={"d-flex justify-content-center"}>
-                                <Card style={cardStyle} className={"mt-2 mb-2"}>
-                                    <Row className={"d-flex justify-content-center"}>
-                                        <Image src={plant.images[1]} style={plantStyle} />
-                                    </Row>
+                                        <Card.Body className={"d-flex flex-column justify-content-center align-items-center"}>
 
-                                    <Card.Body>
-                                        <Card.Title>{plant.name}</Card.Title>
-                                        <Button onClick={buyPlant} value={plant._id} style={buyBtnStyle}
-                                                className={"text-black-50 d-flex justify-content-between"}>
-                                            <Image style={{width: "25px", height: "25px"}} src={coinImg} />
-                                            {plant.price}
-                                        </Button>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        ))}
-                    </Row>
-                    <Modal
-                        show={showInsufficientCoin}
-                        onHide={handleClose}
-                        backdrop="static"
-                        keyboard={false}
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>u no moneh</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            You have insufficient coins for this purchase. Please do more dailies.
-                        </Modal.Body>
-                    </Modal>
+                                            <Card.Title>{plant.name}</Card.Title>
+                                            <Button onClick={buyPlant} value={plant._id} style={buyBtnStyle}
+                                                    className={"text-black-50 d-flex justify-content-between btn-change"}>
+                                                <Image style={{width: "25px", height: "25px"}} src={coinImg} />
+                                                {plant.price}
+                                            </Button>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            ))}
+                        </Row>
+                    </Container >
                 </Col>
             </Row>
 
-        </Container>
+            <Modal
+                show={showInsufficientCoin}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>u no moneh</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    You have insufficient coins for this purchase. Please do more dailies.
+                </Modal.Body>
+            </Modal>
+        </div>
+
     );
 }
 
