@@ -34,7 +34,7 @@ function RemoveDoneTaskButton({getTasks}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-            
+
             return task.data.payload._id.toString()
         }catch(e){
             console.log(e)
