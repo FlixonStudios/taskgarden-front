@@ -7,7 +7,7 @@ import axios from "axios";
 function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     const [assignablePlants, setAssignablePlants] = useState([])
-    const [selectedPlant, setSelectedPlant] = useState({})
+    const [selectedPlant, setSelectedPlant] = useState()
     // Datepicker
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
