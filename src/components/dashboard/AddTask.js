@@ -7,7 +7,7 @@ import axios from "axios";
 function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
     const [newTaskForm, setNewTaskForm] = useState({dateBy: new Date()}) // Form State
     const [assignablePlants, setAssignablePlants] = useState([])
-    const [selectedPlant, setSelectedPlant] = useState({})
+    const [selectedPlant, setSelectedPlant] = useState()
     // Datepicker
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -117,13 +117,18 @@ function AddTask({addTaskShow, setAddTaskShow, getTasks}) {
                         <Form.Control name="description" as="textarea" rows={3} placeholder="Enter a description" onChange={handleChange}/>
                     </Form.Group>
 
-                    <Form.Group controlId="exampleForm.ControlSelect1">
-                        <Form.Label>Select Plant</Form.Label>
-                        <Form.Control as="select" onChange={(e) => setSelectedPlant(e.target.value)}>
-                            {assignablePlants.length > 0 && assignablePlants.map((el, i) => {
-                                return <option key={i} value={el._id}>{el.name}</option>
-                            })}
-                        </Form.Control>
+                    <Form.Group>
+                    <Form.Label>Select Plant</Form.Label>
+                        <div key="inline-radio" className="mb-3">
+                        {assignablePlants.length > 0 && assignablePlants.map((el, i) => (
+                            <Form.Check inline
+                                        value={el._id}
+                                       label={el.name}
+                                       name={el.name}
+                                        onClick={(e) => setSelectedPlant(e.target.value)}
+                                       type="radio" />
+                        ))}
+                        </div>
                     </Form.Group>
 
                     <Container>
