@@ -24,11 +24,6 @@ function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}
     // Clicked task state
     const [clickedTask, setClickedTask] = useState({})
 
-
-    useEffect(()=>{
-        console.log(tasks)
-    },[])
-
     function handleEditTask(e, task) {
         setEditTaskShow(true)
         setClickedTask(task)
@@ -55,6 +50,7 @@ function SubBoard({tasks, getTasks, isImportant, isUrgent, color, title, border}
 }
 
 function RenderTasks({tasks, isImportant, isUrgent, handleEditTask}){
+    //onClick={(e) => handleEditTask(e, task)}
     if (tasks === undefined){
         return(
             <>
@@ -67,8 +63,8 @@ function RenderTasks({tasks, isImportant, isUrgent, handleEditTask}){
             <>
                 {tasks.map(task => (
                         (task.isImportant === isImportant && task.isUrgent === isUrgent) &&
-                        <Col md={6} key={task._id} onClick={(e) => handleEditTask(e, task)}>
-                            <Task task={task}/>
+                        <Col lg={6} md={12} key={task._id} >
+                            <Task task={task} handleEditTask={handleEditTask}/>
                         </Col>
                     )
                 )}
