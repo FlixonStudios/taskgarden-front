@@ -19,7 +19,7 @@ export function taskReducer(state=initialState, action){
             let index = taskList.findIndex(el => el._id.toString() === action.payload)
 
             taskList[index].isArchived = true
-            console.log("reducer hit")
+
             return {
                 ...state, tasks: taskList
             }

@@ -32,7 +32,6 @@ function SubBoard({getTasks, isImportant, isUrgent, color, title, border}) {
         setEditTaskShow(true)
         setClickedTask(task)
     }
-    console.log("subboard rendered")
     return (
         <Container style={style}>
             <Row className="mx-auto" style={{height: "15%"}}>
@@ -55,7 +54,12 @@ function SubBoard({getTasks, isImportant, isUrgent, color, title, border}) {
 
 function RenderTasks({isImportant, isUrgent, handleEditTask}){
     //onClick={(e) => handleEditTask(e, task)}
+
     let tasks = useSelector(state => state.tasks)
+
+    useEffect(()=>{
+
+    },[tasks])
 
     if (tasks === undefined){
         return(
@@ -66,12 +70,9 @@ function RenderTasks({isImportant, isUrgent, handleEditTask}){
     }
 
     if (tasks.length >= 0){
-        console.log(tasks)
         return(
             <>
                 {tasks.map(task => {
-                    console.log(task)
-                    console.log(task.isArchived)
                     return (
                             ((task.isImportant === isImportant) && (task.isUrgent === isUrgent) && (task.isArchived === false)) &&
                             <Col lg={6} md={12} key={task._id}>

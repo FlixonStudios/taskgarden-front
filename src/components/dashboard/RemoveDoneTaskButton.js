@@ -21,6 +21,7 @@ function RemoveDoneTaskButton({getTasks}) {
                 let taskId = await setTaskIsArchived(tasksToArchive[i]._id)
                 dispatch(archiveTask(taskId))
             }
+            getTasks()
         }catch(e){
             console.log(e)
         }
@@ -33,7 +34,7 @@ function RemoveDoneTaskButton({getTasks}) {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
-            console.log(task.data)
+            
             return task.data.payload._id.toString()
         }catch(e){
             console.log(e)
