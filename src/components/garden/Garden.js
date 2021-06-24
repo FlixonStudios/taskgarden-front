@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Accordion, Card, Col, Container, Button, Row, Image} from "react-bootstrap";
+import {
+    Accordion,
+    Card,
+    Col,
+    Container,
+    Button,
+    Row,
+    Image,
+    OverlayTrigger,
+    Tooltip,
+    ProgressBar
+} from "react-bootstrap";
 import axios from "axios";
 
 function Garden(props) {
@@ -88,10 +99,10 @@ function Garden(props) {
         </Accordion>
                 </Col>
                 <Col md={9}>
-                    <Container style={{height: "70vh", backgroundColor: "green"}}>
+                    <Container style={{height: "90vh", backgroundColor: "green"}}>
                         <Row style={{height: "100%"}}>
                             {plantSlots.map((el,i) =>
-                            <Col md={4} className="my-3">
+                            <Col key={i} md={4} className="my-3">
                                 <Container style={{
                                     backgroundColor: "rgb(255, 255, 255, 0.3)",
                                     borderRadius: "10px",
@@ -100,7 +111,15 @@ function Garden(props) {
                                 }}
                                            onClick={() => insertPlant(i)}>
                                     {((garden) && (garden.length > 0) && (garden[i] != null) )&&
-                                        <Image src={garden[i].images[garden[i].currentLevel - 1]} alt={garden[i].name} fluid/>
+                                        <OverlayTrigger overlay={
+                                            <Tooltip>
+                                                {garden[i].name}
+                                                <ProgressBar now={garden[i].currentGrowth} label={`${garden[i].currentGrowth/garden[i].maxGrowth*100}%`} max={garden[i].maxGrowth} />
+                                            </Tooltip>
+                                        } placement={'top'}>
+                                            <Image src={garden[i].images[garden[i].currentLevel - 1]} alt={garden[i].name} fluid/>
+                                        </OverlayTrigger>
+
                                     }
                                 </Container>
                             </Col>

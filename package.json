@@ -24,7 +24,7 @@
   "proxy": "http://localhost:8000",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "BUILD_PATH='../taskgarden-back/build' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
