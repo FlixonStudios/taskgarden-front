@@ -47,7 +47,7 @@ function Florist({user, auth, setAuth, admin, coins}) {
             }
 
             //send user, coins and plant to backend and get back a response of updated coins
-            let newCoinsValue = await axios.post('/api/florist/buy',{user,coins,plant},{
+            let newCoinsValue = await axios.post('/api/florist/buy',{coins,plant},{
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
                 }})
