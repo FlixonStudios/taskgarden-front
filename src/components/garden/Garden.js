@@ -11,7 +11,6 @@ function Garden(props) {
     const [selected, setSelected] = useState("")
     const [garden, setGarden] = useState([])
 
-
     useEffect(() => {
         getInventory()
         getGarden()
@@ -48,13 +47,13 @@ function Garden(props) {
     } createSlots(PLANTSLOTSNUMBER)
 
     async function insertPlant(index){
-        console.log(selected, garden[index], index)
         if(selected && !garden[index]) {
             let {data} = await axios.post(`/api/garden/inventory/${selected}`, {index}, {
                 headers: {
                     authorization: `Bearer ${localStorage.token}`
                 }
             })
+            getInventory()
             getGarden()
         }
         setSelected("")
@@ -100,7 +99,7 @@ function Garden(props) {
                                     width: "100%"
                                 }}
                                            onClick={() => insertPlant(i)}>
-                                    {(garden.length > i) &&
+                                    {((garden) && (garden.length > 0) && (garden[i] != null) )&&
                                         <Image src={garden[i].images[garden[i].currentLevel - 1]} alt={garden[i].name} fluid/>
                                     }
                                 </Container>
