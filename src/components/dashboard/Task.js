@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Form, Toast} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import {removeTask} from "../../store/actions/task.action";
@@ -13,6 +13,15 @@ function Task({task, handleEditTask}) {
     const strikethrough = {
         textDecoration: "line-through"
     }
+
+    useEffect(()=>{
+        if (task.status === "Completed") {
+            setDone(true)
+        }else{
+            setDone(false)
+        }
+        console.log(task)
+    },[])
 
     function deleteTask(e){
         e.stopPropagation()
@@ -32,13 +41,26 @@ function Task({task, handleEditTask}) {
     }
 
     function handleDone(e){
-        setDone(!done)
-        console.log(done)
+        //setDone(!done)
+        changeStatus()
         e.stopPropagation()
     }
 
     async function changeStatus(){
-        
+        try{
+            let statusRes = await axios.get(`/api/tasks/done/${task._id}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
+            if (statusRes.data.payload === "Completed"){
+                setDone(true)
+            }else{
+                setDone(false)
+            }
+        }catch(e){
+            console.log(e)
+        }
     }
 
     return (
@@ -50,7 +72,7 @@ function Task({task, handleEditTask}) {
                             className={`mr-auto`}>
                         {task.name}
                     </strong>
-                    <Form.Check type={"checkbox"} onChange={handleDone}/>
+                    <Form.Check type={"checkbox"} onChange={handleDone} checked={done}/>
                 </Toast.Header>
 
                 {/*<Toast.Body>{task.category}</Toast.Body>*/}
