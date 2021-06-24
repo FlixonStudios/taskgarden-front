@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {updateCoins} from "../../store/actions/task.action";
 
 function DailiesBar({daily}) {
     let [buttonState, setButtonState] = useState(false)
@@ -11,6 +13,7 @@ function DailiesBar({daily}) {
         boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.25)"
     }
 
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setButtonState(daily["isArchived"])
@@ -23,6 +26,9 @@ function DailiesBar({daily}) {
             }
         })
         setButtonState(state.data.isArchived)
+
+        //update the store
+        dispatch(updateCoins(state.data.newCoins))
     }
 
 
