@@ -38,7 +38,7 @@ function Task({task, handleEditTask}) {
     }
 
     async function changeStatus(){
-        
+
     }
 
     return (
