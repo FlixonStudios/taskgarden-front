@@ -28,6 +28,7 @@ function Florist({user, auth, setAuth, admin, coins}) {
     const buyBtnStyle = {
         backgroundColor: "rgba(255, 249, 235, 0.2)",
         border: "0",
+        width: "80px",
     }
 
     useEffect(()=>{
@@ -91,15 +92,10 @@ function Florist({user, auth, setAuth, admin, coins}) {
 
                                     <Card.Body>
                                         <Card.Title>{plant.name}</Card.Title>
-                                        <Button onClick={buyPlant} value={plant._id} style={buyBtnStyle} >
-                                            <Row>
-                                                <Col lg={3} className={"p-1"}>
-                                                    <Image style={{width: "25px", height: "25px"}} src={coinImg} />
-                                                </Col>
-                                                <Col lg={9} className={"text-black-50 p-1"}>
-                                                    {plant.price}
-                                                </Col>
-                                            </Row>
+                                        <Button onClick={buyPlant} value={plant._id} style={buyBtnStyle}
+                                                className={"text-black-50 d-flex justify-content-between"}>
+                                            <Image style={{width: "25px", height: "25px"}} src={coinImg} />
+                                            {plant.price}
                                         </Button>
                                     </Card.Body>
                                 </Card>
