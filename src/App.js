@@ -62,7 +62,7 @@ function App() {
                         {(!auth) ? <LandingPage setAuth={setAuth} setAdmin={setAdmin}/> : (!admin) ? <Dashboard setAuth={setAuth}/> : <AdminPage />}
                     </Route>
                     <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} user={user} path="/dashboard" Component={Dashboard} exact/>
-                    <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} path="/garden" Component={Garden} exact/>
+                    <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} user={user} path="/garden" Component={Garden} exact/>
                     <PrivateRouter auth={auth} setAuth={setAuth} admin={admin} user={user} coins={coins} path="/florist" Component={Florist} exact/>
                 </Switch>
             </BrowserRouter>
