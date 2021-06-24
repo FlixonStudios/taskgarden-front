@@ -9,13 +9,26 @@ import {updateCoins} from "../../store/actions/task.action";
 
 
 function Florist({user, auth, setAuth, admin, coins}) {
-
     const [floristPlants, setFloristPlants] = useState([])
     const [showInsufficientCoin, setShowInsufficientCoin] = useState(false);
 
     const handleClose = () => setShowInsufficientCoin(false);
 
     const dispatch = useDispatch()
+
+    const cardStyle = {
+        backgroundColor: "rgba(255, 249, 235,1)",
+        width: "9rem",
+    }
+    const plantStyle = {
+        objectPosition: "center",
+        width: "110px",
+        height: "110px",
+    }
+    const buyBtnStyle = {
+        backgroundColor: "rgba(255, 249, 235, 0.2)",
+        border: "0",
+    }
 
     useEffect(()=>{
         isAuth().then(suc => setAuth(suc)).catch(err => setAuth(err))
@@ -70,16 +83,24 @@ function Florist({user, auth, setAuth, admin, coins}) {
                     <Row md={3} xs={1} className="g-4">
 
                         {floristPlants.length > 0 && floristPlants.map(plant => (
-                            <Col key={plant._id}>
-                                <Card  style={{width: "9rem"}} bg="warning">
-                                    <Card.Img variant="top" src={plant.images[1]} style={{width: "110px", height: "110px"}}  />
+                            <Col key={plant._id} className={"d-flex justify-content-center"}>
+                                <Card style={cardStyle} className={"mt-2 mb-2"}>
+                                    <Row className={"d-flex justify-content-center"}>
+                                        <Image src={plant.images[1]} style={plantStyle} />
+                                    </Row>
+
                                     <Card.Body>
                                         <Card.Title>{plant.name}</Card.Title>
-                                        <Card.Text>
-                                            <Image style={{width: "25px", height: "25px"}} src={coinImg} />
-                                            {plant.price}
-                                        </Card.Text>
-                                        <Button onClick={buyPlant} value={plant._id}>Buy</Button>
+                                        <Button onClick={buyPlant} value={plant._id} style={buyBtnStyle} >
+                                            <Row>
+                                                <Col lg={3} className={"p-1"}>
+                                                    <Image style={{width: "25px", height: "25px"}} src={coinImg} />
+                                                </Col>
+                                                <Col lg={9} className={"text-black-50 p-1"}>
+                                                    {plant.price}
+                                                </Col>
+                                            </Row>
+                                        </Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
