@@ -3,26 +3,61 @@ import {Accordion, Card, Col, Container, Button, Row, Image} from "react-bootstr
 import axios from "axios";
 
 function Garden(props) {
+    // Number of slots in garden
+    const PLANTSLOTSNUMBER = 9
+    let plantSlots = []
+
     const [inventory, setInventory] = useState([])
     const [selected, setSelected] = useState("")
+    const [garden, setGarden] = useState([])
 
 
     useEffect(() => {
-        async function getInventory() {
-            let {data: {plants}} = await axios.get("/api/garden/", {
-                headers: {
-                    authorization: `Bearer ${localStorage.token}`
-                }
-            })
-            console.log(plants)
-            setInventory(plants)
-        }
         getInventory()
+        getGarden()
     },[])
+
+    async function getInventory() {
+        let {data: {plants}} = await axios.get("/api/garden/inventory", {
+            headers: {
+                authorization: `Bearer ${localStorage.token}`
+            }
+        })
+        setInventory(plants)
+    }
+
+    async function getGarden() {
+        let {data: {garden}} = await axios.get("/api/garden/", {
+            headers: {
+                authorization: `Bearer ${localStorage.token}`
+            }
+        })
+        setGarden(garden.plants)
+    }
 
     function selectPlants(id) {
         setSelected("")
         if(selected !== id) setSelected(id)
+    }
+
+    // Loop to push PLANTSLOTSNUMBER * elements into plantSlots
+    function createSlots(slots) {
+        for (let i = 0; i < slots; i++) {
+            plantSlots.push({})
+        }
+    } createSlots(PLANTSLOTSNUMBER)
+
+    async function insertPlant(index){
+        console.log(selected, garden[index], index)
+        if(selected && !garden[index]) {
+            let {data} = await axios.post(`/api/garden/inventory/${selected}`, {index}, {
+                headers: {
+                    authorization: `Bearer ${localStorage.token}`
+                }
+            })
+            getGarden()
+        }
+        setSelected("")
     }
 
     return (
@@ -55,7 +90,23 @@ function Garden(props) {
                 </Col>
                 <Col md={9}>
                     <Container style={{height: "70vh", backgroundColor: "green"}}>
-
+                        <Row style={{height: "100%"}}>
+                            {plantSlots.map((el,i) =>
+                            <Col md={4} className="my-3">
+                                <Container style={{
+                                    backgroundColor: "rgb(255, 255, 255, 0.3)",
+                                    borderRadius: "10px",
+                                    height: "100%",
+                                    width: "100%"
+                                }}
+                                           onClick={() => insertPlant(i)}>
+                                    {(garden.length > i) &&
+                                        <Image src={garden[i].images[garden[i].currentLevel - 1]} alt={garden[i].name} fluid/>
+                                    }
+                                </Container>
+                            </Col>
+                            )}
+                        </Row>
                     </Container>
                 </Col>
             </Row>
