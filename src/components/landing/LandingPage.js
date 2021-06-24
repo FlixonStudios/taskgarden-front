@@ -24,7 +24,10 @@ function LandingPage({auth, setAuth, setAdmin, setUser}) {
 
     const loginStyle = {
 //81, 163, 136,  54, 150, 148,
-        backgroundColor: "rgba(81, 163, 136, 0.7)"
+        backgroundColor: "rgba(81, 163, 136,0.7)",
+        top: "30%",
+        borderRadius: "25px",
+        border: "solid rgba(24,71,57, 1)"
     }
 
     const headerStyle={
@@ -43,25 +46,38 @@ function LandingPage({auth, setAuth, setAdmin, setUser}) {
                     </Container>
                 </Col>
             </Row>
-                <div style={{height: "100vh"}}>
-                    <Container style={loginStyle} className={"m-3"}>
-                        <Row className="justify-content-center">
-                            Have an Account? Sign in!
-                        </Row>
-                        <Row className="justify-content-center">
-                            <Button variant="primary" className="landingButton" onClick={handleLoginShow}>
-                                Sign in
-                            </Button>
-                        </Row>
-                        <Row className="justify-content-center">
-                            If not, register here!
-                        </Row>
-                        <Row className="justify-content-center">
-                            <Button variant="primary" className="landingButton" onClick={handleRegisterShow}>
-                                Register
-                            </Button>
-                        </Row>
-                    </Container>
+                <div style={{height: "100vh"}} className={"d-flex flex-column justify-content-around"}>
+
+                    <Row className={"d-flex justify-content-center"}>
+                        <Col lg={6} >
+                        <Container style={loginStyle} className={"p-3"}>
+
+                                <Row className={"justify-content-center mb-3"}>
+                                    Have an Account? Sign in!
+                                </Row>
+                                <Row className="justify-content-center">
+                                    <Button variant="primary" className="landingButton" onClick={handleLoginShow}>
+                                        Sign in
+                                    </Button>
+                                </Row>
+                                <Row className="justify-content-center mb-3 mt-3">
+                                    If not, register here!
+
+                                </Row>
+                                <Row className="justify-content-center">
+                                    <Button variant="primary" className="landingButton" onClick={handleRegisterShow}>
+                                        Register
+                                    </Button>
+                                </Row>
+
+
+
+                        </Container>
+                        </Col>
+                    </Row>
+
+                    <Row></Row>
+                    <Row></Row>
                 </div>
 
             <Login show={loginShow} setShow={setLoginShow} setAuth={setAuth} setAdmin={setAdmin}/>
