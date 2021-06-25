@@ -6,9 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. Design
 
-The overall objective of the application is focus and simplicity. 
+The overall theme of the application is focus and simplicity. 
 
-We want users to have clarity over their daily tasks in a non-cluttered environment dashboard with simple no-nonsense classification of importance and urgency
+We want users to have clarity over their daily tasks in a non-cluttered environment with simple no-nonsense classification of importance and urgency
 
 At the same time, we want to motivate users to carry out tasks. Although completing tasks are rewards in their own right, we want to allow the user to visualise the mountains of work they actually accomplish so they don't lose sight of how awesome they are.
 
