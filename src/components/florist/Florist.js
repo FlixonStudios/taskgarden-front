@@ -18,14 +18,15 @@ function Florist({user, auth, setAuth, admin, coins}) {
 
     const cardStyle = {
         backgroundColor: "rgba(255, 249, 235,1)",
-
         borderRadius: "25px",
+        width: "100%",
+
     }
     const plantStyle = {
         objectPosition: "center",
         width: "100%",
-        maxWidth: "330px"
-        //height: "110px",
+        maxWidth: "330px",
+        //height: "200px",
     }
     const buyBtnStyle = {
         border: "0",
@@ -91,12 +92,13 @@ function Florist({user, auth, setAuth, admin, coins}) {
                         <Row className="g-4">
                             {floristPlants.length > 0 && floristPlants.map(plant => (
                                 <Col lg={4} xs={12} key={plant._id} className={"d-flex justify-content-center"}>
-                                    <Card style={cardStyle} className={"mt-2 mb-2 p-2"}>
+                                    <Card style={cardStyle}
+                                          className={"mt-2 mb-2 p-2 d-flex flex-column justify-content-between"}>
                                         <Row className={"d-flex justify-content-center"}>
-                                            <Image src={plant.images[1]} style={plantStyle} />
+                                            <Image src={plant.images[1]} style={plantStyle} className={"m-3"} />
                                         </Row>
-
-                                        <Card.Body className={"d-flex flex-column justify-content-center align-items-center"}>
+                                        <div></div>
+                                        <Card.Body className={"d-flex flex-column justify-content-end align-items-center"}>
 
                                             <Card.Title>{plant.name}</Card.Title>
                                             <Button onClick={buyPlant} value={plant._id} style={buyBtnStyle}
