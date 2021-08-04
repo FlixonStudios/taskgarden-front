@@ -30,7 +30,7 @@ function Task({task, handleEditTask}) {
         }else{
             setDone(false)
         }
-    },[])
+    },[task])
 
     function deleteTask(e){
         e.stopPropagation()

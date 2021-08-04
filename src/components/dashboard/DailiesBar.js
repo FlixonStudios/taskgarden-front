@@ -17,7 +17,7 @@ function DailiesBar({daily}) {
 
     useEffect(() => {
         setButtonState(daily["isArchived"])
-    },[])
+    },[daily])
 
     async function changeStateOfDaily() {
         let state = await axios.post(`/api/tasks/dailies/${daily._id}`, daily, {
